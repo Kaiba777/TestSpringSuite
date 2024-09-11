@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="fr" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8" />
+    <title>S'inscrire</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesbrand" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" th:href="@{private/assets/images/favicon.ico}">
+
+    <!-- Layout config Js -->
+    <script src="/private/assets/js/layout.js"></script>
+    <!-- Bootstrap Css -->
+    <link th:href="@{/private/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link th:href="@{/private/assets/css/icons.min.css}" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link th:href="@{/private/assets/css/app.min.css}" rel="stylesheet" type="text/css" />
+    <!-- custom Css-->
+    <link th:href="@{/private/assets/css/custom.min.css}" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <div class="auth-page-wrapper pt-5">
+        <!-- auth page bg -->
+        <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
+            <div class="bg-overlay"></div>
+
+            <div class="shape">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
+                    <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- auth page content -->
+        <div class="auth-page-content">
+            <div class="container">
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card mt-4">
+
+                            <div class="card-body p-4">
+                                <div class="text-center mt-2">
+                                    <h5 class="text-primary">Création de compte</h5>
+                                    <p class="text-muted">Obtenez votre compte Test-Spring maintenant</p>
+                                </div>
+                                <!-- Message de succès -->
+                                <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <strong>Compte créer avec succès</strong>
+                                    <a href="/login" class="ms-2">Se connecter</a>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <div class="p-2 mt-4">
+                                    <form method="post" th:object="${inscriptionDto}" enctype="multipart/form-data">
+
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                        <div class="mb-3">
+                                            <label class="form-label">Nom</label>
+                                            <input type="text" class="form-control" placeholder="Entrez votre nom" th:field="${inscriptionDto.nom}">
+                                            <p th:if="${#fields.hasErrors('nom')}" th:errorclass="text-danger" th:errors="${inscriptionDto.nom}"></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Prénom</label>
+                                            <input type="text" class="form-control" placeholder="Entrez votre prénom" th:field="${inscriptionDto.prenom}">
+                                            <p th:if="${#fields.hasErrors('prenom')}" th:errorclass="text-danger" th:errors="${inscriptionDto.prenom}"></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" placeholder="Entrez votre email" th:field="${inscriptionDto.email}">
+                                            <p th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="${inscriptionDto.email}"></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Photo</label>
+                                            <input type="file" class="form-control" th:field="${inscriptionDto.image}">
+                                            <p th:if="${#fields.hasErrors('image')}" th:errorclass="text-danger" th:errors="${inscriptionDto.image}"></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Sexe</label>
+                                            <input type="text" class="form-control" placeholder="Entrez votre sexe" th:field="${inscriptionDto.sexe}">
+                                            <p th:if="${#fields.hasErrors('sexe')}" th:errorclass="text-danger" th:errors="${inscriptionDto.sexe}"></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Age</label>
+                                            <input type="number" class="form-control" placeholder="Entrez votre age" th:field="${inscriptionDto.age}">
+                                            <p th:if="${#fields.hasErrors('age')}" th:errorclass="text-danger" th:errors="${inscriptionDto.age}"></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Numéro de Téléphone</label>
+                                            <input type="tel" class="form-control" placeholder="Entrez votre numéro de téléphone" th:field="${inscriptionDto.numero}">
+                                            <p th:if="${#fields.hasErrors('numero')}" th:errorclass="text-danger" th:errors="${inscriptionDto.numero}"></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Mot de passe</label>
+                                            <input type="password" class="form-control" placeholder="Entrez votre mot de passe" th:field="${inscriptionDto.password}">
+                                            <p th:if="${#fields.hasErrors('password')}" th:errorclass="text-danger" th:errors="${inscriptionDto.password}"></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Confirmer Mot de passe</label>
+                                            <input type="password" class="form-control" placeholder="Confirmez votre mot de passe" th:field="${inscriptionDto.confirmerPassword}">
+                                            <p th:if="${#fields.hasErrors('confirmerPassword')}" th:errorclass="text-danger" th:errors="${inscriptionDto.confirmerPassword}"></p>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <button class="btn btn-success w-100" type="submit">S'inscrire</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                            <!-- end card body -->
+                        </div>
+                        <!-- end card -->
+
+                        <div class="mt-4 text-center">
+                            <p class="mb-0">J'ai un compte <a href="auth-signin-basic.html" class="fw-semibold text-primary text-decoration-underline"> Se connecter </a> </p>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- end row -->
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end auth page content -->
+    </div>
+    <!-- end auth-page-wrapper -->
+
+    <!-- JAVASCRIPT -->
+    <script src="/private/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/private/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="/private/assets/libs/node-waves/waves.min.js"></script>
+    <script src="/private/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="/private/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="/private/assets/js/plugins.js"></script>
+
+    <!-- particles js -->
+    <script src="/private/assets/libs/particles.js/particles.js"></script>
+    <!-- particles app js -->
+    <script src="/private/assets/js/pages/particles.app.js"></script>
+    <!-- validation init -->
+    <script src="/private/assets/js/pages/form-validation.init.js"></script>
+    <!-- password create init -->
+    <script src="/private/assets/js/pages/passowrd-create.init.js"></script>
+</body>
+
+</html>
