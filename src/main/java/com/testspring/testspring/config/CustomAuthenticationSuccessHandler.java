@@ -12,23 +12,22 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class CustomAuthenticationSuccessHandler  implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-     
 
-                // Vérifier les rôles de l'utilisateur
-                if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_administrateur"))) {
-                    // Rediriger vers la page administrateur
-                    response.sendRedirect("/admin");
-                } else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_utilisateur"))) {
-                    // Rediriger vers la page utilisateur
-                    response.sendRedirect("/user");
-                } else {
-                    // Rediriger vers la page d'accueil par défaut
-                    response.sendRedirect("/");
+        // Vérifier les rôles de l'utilisateur
+        if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_administrateur"))) {
+            // Rediriger vers la page administrateur
+            response.sendRedirect("/admin/tableau-de-bord");
+        } else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_utilisateur"))) {
+            // Rediriger vers la page utilisateur
+            response.sendRedirect("/user/tableau-de-bord");
+        } else {
+            // Rediriger vers la page d'accueil par défaut
+            response.sendRedirect("/");
         }
     }
 

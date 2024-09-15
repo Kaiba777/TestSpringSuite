@@ -22,8 +22,6 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
 @Controller
 public class AuthController {
 
@@ -33,59 +31,58 @@ public class AuthController {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    //Affiche la page d'inscription de gère les règles de validation
+    // Affiche la page d'inscription de gère les règles de validation
     @GetMapping("/Inscription")
     public String inscription(Model model) {
         InscriptionDto inscriptionDto = new InscriptionDto();
         model.addAttribute(inscriptionDto);
 
-        //Message de Succès
+        // Message de Succès
         model.addAttribute("success", false);
         return "auth/auth-signup-basic";
     }
 
-    //Permet de valider le formulaire
+    // Permet de valider le formulaire
     @PostMapping("/Inscription")
     public String inscription(Model model, @Valid @ModelAttribute InscriptionDto inscriptionDto, BindingResult result) {
-        
+
         MultipartFile file = inscriptionDto.getImage();
 
-        //Vérifie si le password et le confirmerPassword sont les mêmes
+        // Vérifie si le password et le confirmerPassword sont les mêmes
         if (!inscriptionDto.getPassword().equals(inscriptionDto.getConfirmerPassword())) {
             result.addError(
-                new FieldError("inscriptionDto", "confirmerPassword", "le mot de passe et le mot de passe de confirmation sont incorrects")
-            );
+                    new FieldError("inscriptionDto", "confirmerPassword",
+                            "le mot de passe et le mot de passe de confirmation sont incorrects"));
         }
 
-        //Vérifie si l'adresse email est déjà utiliser
+        // Vérifie si l'adresse email est déjà utiliser
         AppUser appUser = repo.findByEmail(inscriptionDto.getEmail());
         if (appUser != null) {
             result.addError(
-                new FieldError("inscriptionDto", "email", "Cette adresse email est déjà utiliser")
-            );
+                    new FieldError("inscriptionDto", "email", "Cette adresse email est déjà utiliser"));
         }
 
-         // Vérifiez si le fichier est vide
-         if (file.isEmpty()) {
+        // Vérifiez si le fichier est vide
+        if (file.isEmpty()) {
             result.addError(new FieldError("inscriptionDto", "image", "Aucun fichier sélectionné"));
         } else if (!file.getContentType().startsWith("image/")) {
             result.addError(new FieldError("inscriptionDto", "image", "Le fichier doit être une image"));
         }
 
-        //Declenche l'erreur de validation
+        // Declenche l'erreur de validation
         if (result.hasErrors()) {
             return "auth/auth-signup-basic";
         }
 
-        //Permet de créer un utilisateur
+        // Permet de créer un utilisateur
         try {
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             String filePath = uploadDir + fileName;
             File destinationFile = new File(filePath);
             file.transferTo(destinationFile);
-            //Code le password
+            // Code le password
             var bCryptEncoder = new BCryptPasswordEncoder();
-            
+
             AppUser nouveauUtilisateur = new AppUser();
             nouveauUtilisateur.setNom(inscriptionDto.getNom());
             nouveauUtilisateur.setPrenom(inscriptionDto.getPrenom());
@@ -100,20 +97,19 @@ public class AuthController {
 
             repo.save(nouveauUtilisateur);
 
-            //Vider le formulaire d'inscription après avoir créer un utilisateur
+            // Vider le formulaire d'inscription après avoir créer un utilisateur
             model.addAttribute("inscriptionDto", new InscriptionDto());
 
-            //message de succès
-			model.addAttribute("success", true);
+            // message de succès
+            model.addAttribute("success", true);
 
             // Redirection vers la page de connexion après l'inscription
             return "redirect:/login";
-            
+
         } catch (Exception ex) {
             result.addError(
-                //Nous renvoyons l'erreur sur le nom s'il y a une erreur
-                new FieldError("inscriptionDto", "nom", ex.getMessage())
-            );
+                    // Nous renvoyons l'erreur sur le nom s'il y a une erreur
+                    new FieldError("inscriptionDto", "nom", ex.getMessage()));
         }
 
         return "auth/auth-signup-basic";
@@ -125,14 +121,4 @@ public class AuthController {
         return "auth/auth-signin-basic";
     }
 
-    @GetMapping("/admin")
-    public String admin() {
-        return "private/admin/apps-tasks-create";
-    }
-
-    @GetMapping("/user")
-    public String user() {
-        return "private/user/apps-tasks-create";
-    }
-    
 }

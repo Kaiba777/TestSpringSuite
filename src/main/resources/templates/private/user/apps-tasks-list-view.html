@@ -1,29 +1,30 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+<html lang="fr" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
+    data-sidebar-image="none" data-preloader="disable">
 
 <head>
 
     <meta charset="utf-8" />
-    <title>Tasks List | Velzon - Admin & Dashboard Template</title>
+    <title>Mon tableau de bord</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" th:href="@{../private/assets/images/favicon.ico}">
 
     <!-- Sweet Alert css-->
-    <link href="assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{../private/assets/libs/sweetalert2/sweetalert2.min.css}" rel="stylesheet" type="text/css" />
 
     <!-- Layout config Js -->
-    <script src="assets/js/layout.js"></script>
+    <script src="../private/assets/js/layout.js"></script>
     <!-- Bootstrap Css -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{../private/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{../private/assets/css/icons.min.css}" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{../private/assets/css/app.min.css}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
-    <link href="assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <link th:href="@{../private/assets/css/custom.min.css}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -34,159 +35,105 @@
 
         <!-- Navbar -->
         <header id="page-topbar">
-    <div class="layout-width">
-        <div class="navbar-header">
-            <div class="d-flex">
-                <!-- LOGO -->
-                <div class="navbar-brand-box horizontal-logo">
-                    <a href="index.html" class="logo logo-dark">
-                        <span class="logo-sm">
-                            <img src="assets/images/logo-sm.png" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="assets/images/logo-dark.png" alt="" height="17">
-                        </span>
-                    </a>
+            <div class="layout-width">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <!-- LOGO -->
+                        <div class="navbar-brand-box horizontal-logo">
+                            <a href="index.html" class="logo logo-dark">
+                                <span class="logo-sm">
+                                    <img src="../private/assets/images/logo-sm.png" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="../private/assets/images/logo-dark.png" alt="" height="17">
+                                </span>
+                            </a>
 
-                    <a href="index.html" class="logo logo-light">
-                        <span class="logo-sm">
-                            <img src="assets/images/logo-sm.png" alt="" height="22">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="assets/images/logo-light.png" alt="" height="17">
-                        </span>
-                    </a>
-                </div>
+                            <a href="index.html" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="../private/assets/images/logo-sm.png" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="../private/assets/images/logo-light.png" alt="" height="17">
+                                </span>
+                            </a>
+                        </div>
 
-                <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
-                    id="topnav-hamburger-icon">
-                    <span class="hamburger-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
-                </button>
-            </div>
+                        <button type="button"
+                            class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
+                            id="topnav-hamburger-icon">
+                            <span class="hamburger-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </button>
+                    </div>
 
-            <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center">
 
-                <div class="dropdown d-md-none topbar-head-dropdown header-item">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
-                        id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="bx bx-search fs-22"></i>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
-                        aria-labelledby="page-header-search-dropdown">
-                        <form class="p-3">
-                            <div class="form-group m-0">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search ..."
-                                        aria-label="Recipient's username">
-                                    <button class="btn btn-primary" type="submit"><i
-                                            class="mdi mdi-magnify"></i></button>
+                        <div class="dropdown d-md-none topbar-head-dropdown header-item">
+                            <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
+                                id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                <i class="bx bx-search fs-22"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0"
+                                aria-labelledby="page-header-search-dropdown">
+                                <form class="p-3">
+                                    <div class="form-group m-0">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Search ..."
+                                                aria-label="Recipient's username">
+                                            <button class="btn btn-primary" type="submit"><i
+                                                    class="mdi mdi-magnify"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="ms-1 header-item d-none d-sm-flex">
+                            <button type="button"
+                                class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
+                                <i class='bx bx-moon fs-22'></i>
+                            </button>
+                        </div>
+
+                        <div class="dropdown ms-sm-3 header-item topbar-user">
+                            <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <span class="d-flex align-items-center">
+                                    <img class="rounded-circle header-profile-user"
+                                        src="../private/assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                                    <span class="text-start ms-xl-2">
+                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Anna
+                                            Adame</span>
+                                    </span>
+                                </span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <!-- item-->
+                                <h6 class="dropdown-header">Bienvenue Anna!</h6>
+                                <a class="dropdown-item" href="/user/mon-profile"><i
+                                        class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
+                                        class="align-middle">Mon profile</span></a>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-item">
+                                    <form method="post" action="/logout">
+                                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+                                            <span>Deconnexion</span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="dropdown ms-1 topbar-head-dropdown header-item">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img id="header-lang-img" src="assets/images/flags/us.svg" alt="Header Language" height="20"
-                            class="rounded">
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end">
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language py-2" data-lang="en"
-                            title="English">
-                            <img src="assets/images/flags/us.svg" alt="user-image" class="me-2 rounded" height="18">
-                            <span class="align-middle">English</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="sp"
-                            title="Spanish">
-                            <img src="assets/images/flags/spain.svg" alt="user-image" class="me-2 rounded" height="18">
-                            <span class="align-middle">Española</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="gr"
-                            title="German">
-                            <img src="assets/images/flags/germany.svg" alt="user-image" class="me-2 rounded"
-                                height="18"> <span class="align-middle">Deutsche</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="it"
-                            title="Italian">
-                            <img src="assets/images/flags/italy.svg" alt="user-image" class="me-2 rounded" height="18">
-                            <span class="align-middle">Italiana</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ru"
-                            title="Russian">
-                            <img src="assets/images/flags/russia.svg" alt="user-image" class="me-2 rounded" height="18">
-                            <span class="align-middle">русский</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="ch"
-                            title="Chinese">
-                            <img src="assets/images/flags/china.svg" alt="user-image" class="me-2 rounded" height="18">
-                            <span class="align-middle">中国人</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="fr"
-                            title="French">
-                            <img src="assets/images/flags/french.svg" alt="user-image" class="me-2 rounded" height="18">
-                            <span class="align-middle">français</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button"
-                        class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
-                        <i class='bx bx-moon fs-22'></i>
-                    </button>
-                </div>
-
-                <div class="dropdown ms-sm-3 header-item topbar-user">
-                    <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg"
-                                alt="Header Avatar">
-                            <span class="text-start ms-xl-2">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Anna Adame</span>
-                            </span>
-                        </span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end">
-                        <!-- item-->
-                        <h6 class="dropdown-header">Bienvenue Anna!</h6>
-                        <a class="dropdown-item" href="pages-profile.html"><i
-                                class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Profile</span></a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="pages-profile.html"><i
-                                class="mdi mdi-wallet text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Mes informations</a>
-                        <a class="dropdown-item" href="auth-logout-basic.html"><i
-                                class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle" data-key="t-logout">Logout</span></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</header>
+        </header>
         <!-- ========== App Menu ========== -->
         <div class="app-menu navbar-menu">
             <!-- LOGO -->
@@ -194,22 +141,23 @@
                 <!-- Dark Logo-->
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="assets/images/logo-sm.png" alt="" height="22">
+                        <img src="../private/assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="assets/images/logo-dark.png" alt="" height="17">
+                        <img src="../private/assets/images/logo-dark.png" alt="" height="17">
                     </span>
                 </a>
                 <!-- Light Logo-->
                 <a href="index.html" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="assets/images/logo-sm.png" alt="" height="22">
+                        <img src="../private/assets/images/logo-sm.png" alt="" height="22">
                     </span>
                     <span class="logo-lg">
-                        <img src="assets/images/logo-light.png" alt="" height="17">
+                        <img src="../private/assets/images/logo-light.png" alt="" height="17">
                     </span>
                 </a>
-                <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+                <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+                    id="vertical-hover">
                     <i class="ri-record-circle-line"></i>
                 </button>
             </div>
@@ -222,24 +170,17 @@
                     <ul class="navbar-nav" id="navbar-nav">
                         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                         <li class="nav-item">
-                            <a href="apps-tasks-list-view.html" class="nav-link">
+                            <a href="/user/tableau-de-bord" class="nav-link active">
                                 Tableaux de bord </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages-profile.html" class="nav-link">
-                                Mes informations </a>
+                            <a href="/user/mon-profile" class="nav-link">
+                                Mon profile </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages-profile-settings.html" class="nav-link">
-                                Modifier mes informations </a>
+                            <a href="/user/modifier-mon-profile" class="nav-link">
+                                Modifier mon profile </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                Se deconnecter </a>
-                        </li>
-
-
-
                     </ul>
                 </div>
                 <!-- Sidebar -->
@@ -276,12 +217,13 @@
                                         <div class="row g-3">
                                             <div class="col-xxl-5 col-sm-12">
                                                 <div class="search-box">
-                                                    <input type="text" class="form-control search bg-light border-light" placeholder="Rechercher un utilisateur">
+                                                    <input type="text" class="form-control search bg-light border-light"
+                                                        placeholder="Rechercher un utilisateur">
                                                     <i class="ri-search-line search-icon"></i>
                                                 </div>
                                             </div>
                                             <!--end col-->
-                                            
+
                                         </div>
                                         <!--end row-->
                                     </form>
@@ -294,7 +236,8 @@
                                                 <tr>
                                                     <th scope="col" style="width: 40px;">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="checkAll" value="option">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                id="checkAll" value="option">
                                                         </div>
                                                     </th>
                                                     <th class="sort" data-sort="assignedto">Photo</th>
@@ -308,28 +251,38 @@
                                                 <tr>
                                                     <th scope="row">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                name="chk_child" value="option1">
                                                         </div>
                                                     </th>
                                                     <td class="assignedto">
                                                         <div class="avatar-group">
-                                                            <a href="javascript: void(0);" class="avatar-group-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Frank">
-                                                                <img src="assets/images/users/avatar-3.jpg" alt="" class="rounded-circle avatar-xxs" />
+                                                            <a href="javascript: void(0);" class="avatar-group-item"
+                                                                data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                                                data-bs-placement="top" title="Frank">
+                                                                <img src="../private/assets/images/users/avatar-3.jpg"
+                                                                    alt="" class="rounded-circle avatar-xxs" />
                                                             </a>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="d-flex">
-                                                            <div class="flex-grow-1 tasks_name">Profile Page Satructure</div>
+                                                            <div class="flex-grow-1 tasks_name">Profile Page Satructure
+                                                            </div>
                                                             <div class="flex-shrink-0 ms-4">
                                                                 <ul class="list-inline tasks-list-menu mb-0">
-                                                                    <li class="list-inline-item"><a href="apps-tasks-details.html"><i class="ri-eye-fill align-bottom me-2 text-muted"></i></a></li>
+                                                                    <li class="list-inline-item"><a
+                                                                            href="/user/detail-utilisateur"><i
+                                                                                class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
+                                                                    </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="client_name">Robert McMahon</td>
-                                                    <td class="status"><span class="badge badge-soft-secondary text-uppercase">Inprogress</span></td>
+                                                    <td class="status"><span
+                                                            class="badge badge-soft-secondary text-uppercase">Inprogress</span>
+                                                    </td>
                                                     <td class="due_date">25 Jan, 2022</td>
                                                 </tr>
                                             </tbody>
@@ -337,9 +290,12 @@
                                         <!--end table-->
                                         <div class="noresult" style="display: none">
                                             <div class="text-center">
-                                                <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px"></lord-icon>
+                                                <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop"
+                                                    colors="primary:#121331,secondary:#08a88a"
+                                                    style="width:75px;height:75px"></lord-icon>
                                                 <h5 class="mt-2">Sorry! No Result Found</h5>
-                                                <p class="text-muted mb-0">We've searched more than 200k+ tasks We did not find any tasks for you search.</p>
+                                                <p class="text-muted mb-0">We've searched more than 200k+ tasks We did
+                                                    not find any tasks for you search.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -370,7 +326,9 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Velzon.
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script> © Velzon.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
@@ -404,7 +362,8 @@
     </div>
 
     <div class="customizer-setting d-none d-md-block">
-        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
+        <div class="btn-info btn-rounded shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas"
+            data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
             <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
         </div>
     </div>
@@ -414,7 +373,8 @@
         <div class="d-flex align-items-center bg-primary bg-gradient p-3 offcanvas-header">
             <h5 class="m-0 me-2 text-white">Theme Customizer</h5>
 
-            <button type="button" class="btn-close btn-close-white ms-auto" id="customizerclose-btn" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close btn-close-white ms-auto" id="customizerclose-btn"
+                data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-0">
             <div data-simplebar class="h-100">
@@ -425,7 +385,8 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input id="customizer-layout01" name="data-layout" type="radio" value="vertical" class="form-check-input">
+                                <input id="customizer-layout01" name="data-layout" type="radio" value="vertical"
+                                    class="form-check-input">
                                 <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout01">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
@@ -449,7 +410,8 @@
                         </div>
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input id="customizer-layout02" name="data-layout" type="radio" value="horizontal" class="form-check-input">
+                                <input id="customizer-layout02" name="data-layout" type="radio" value="horizontal"
+                                    class="form-check-input">
                                 <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout02">
                                     <span class="d-flex h-100 flex-column gap-1">
                                         <span class="bg-light d-flex p-1 gap-1 align-items-center">
@@ -466,7 +428,8 @@
                         </div>
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input id="customizer-layout03" name="data-layout" type="radio" value="twocolumn" class="form-check-input">
+                                <input id="customizer-layout03" name="data-layout" type="radio" value="twocolumn"
+                                    class="form-check-input">
                                 <label class="form-check-label p-0 avatar-md w-100" for="customizer-layout03">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
@@ -506,7 +469,8 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-check card-radio">
-                                    <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-light" value="light">
+                                    <input class="form-check-input" type="radio" name="data-layout-mode"
+                                        id="layout-mode-light" value="light">
                                     <label class="form-check-label p-0 avatar-md w-100" for="layout-mode-light">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -531,7 +495,8 @@
 
                             <div class="col-4">
                                 <div class="form-check card-radio dark">
-                                    <input class="form-check-input" type="radio" name="data-layout-mode" id="layout-mode-dark" value="dark">
+                                    <input class="form-check-input" type="radio" name="data-layout-mode"
+                                        id="layout-mode-dark" value="dark">
                                     <label class="form-check-label p-0 avatar-md w-100 bg-dark" for="layout-mode-dark">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -563,7 +528,8 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-check card-radio">
-                                    <input class="form-check-input" type="radio" name="data-layout-width" id="layout-width-fluid" value="fluid">
+                                    <input class="form-check-input" type="radio" name="data-layout-width"
+                                        id="layout-width-fluid" value="fluid">
                                     <label class="form-check-label p-0 avatar-md w-100" for="layout-width-fluid">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -587,7 +553,8 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-check card-radio">
-                                    <input class="form-check-input" type="radio" name="data-layout-width" id="layout-width-boxed" value="boxed">
+                                    <input class="form-check-input" type="radio" name="data-layout-width"
+                                        id="layout-width-boxed" value="boxed">
                                     <label class="form-check-label p-0 avatar-md w-100 px-2" for="layout-width-boxed">
                                         <span class="d-flex gap-1 h-100 border-start border-end">
                                             <span class="flex-shrink-0">
@@ -617,10 +584,12 @@
                         <p class="text-muted">Choose Fixed or Scrollable Layout Position.</p>
 
                         <div class="btn-group radio" role="group">
-                            <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-fixed" value="fixed">
+                            <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-fixed"
+                                value="fixed">
                             <label class="btn btn-light w-sm" for="layout-position-fixed">Fixed</label>
 
-                            <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-scrollable" value="scrollable">
+                            <input type="radio" class="btn-check" name="data-layout-position"
+                                id="layout-position-scrollable" value="scrollable">
                             <label class="btn btn-light w-sm ms-0" for="layout-position-scrollable">Scrollable</label>
                         </div>
                     </div>
@@ -630,7 +599,8 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input class="form-check-input" type="radio" name="data-topbar" id="topbar-color-light" value="light">
+                                <input class="form-check-input" type="radio" name="data-topbar" id="topbar-color-light"
+                                    value="light">
                                 <label class="form-check-label p-0 avatar-md w-100" for="topbar-color-light">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
@@ -654,7 +624,8 @@
                         </div>
                         <div class="col-4">
                             <div class="form-check card-radio">
-                                <input class="form-check-input" type="radio" name="data-topbar" id="topbar-color-dark" value="dark">
+                                <input class="form-check-input" type="radio" name="data-topbar" id="topbar-color-dark"
+                                    value="dark">
                                 <label class="form-check-label p-0 avatar-md w-100" for="topbar-color-dark">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
@@ -685,7 +656,8 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-sidebar-size" id="sidebar-size-default" value="lg">
+                                    <input class="form-check-input" type="radio" name="data-sidebar-size"
+                                        id="sidebar-size-default" value="lg">
                                     <label class="form-check-label p-0 avatar-md w-100" for="sidebar-size-default">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -710,7 +682,8 @@
 
                             <div class="col-4">
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-sidebar-size" id="sidebar-size-compact" value="md">
+                                    <input class="form-check-input" type="radio" name="data-sidebar-size"
+                                        id="sidebar-size-compact" value="md">
                                     <label class="form-check-label p-0 avatar-md w-100" for="sidebar-size-compact">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -735,7 +708,8 @@
 
                             <div class="col-4">
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-sidebar-size" id="sidebar-size-small" value="sm">
+                                    <input class="form-check-input" type="radio" name="data-sidebar-size"
+                                        id="sidebar-size-small" value="sm">
                                     <label class="form-check-label p-0 avatar-md w-100" for="sidebar-size-small">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -760,7 +734,8 @@
 
                             <div class="col-4">
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-sidebar-size" id="sidebar-size-small-hover" value="sm-hover">
+                                    <input class="form-check-input" type="radio" name="data-sidebar-size"
+                                        id="sidebar-size-small-hover" value="sm-hover">
                                     <label class="form-check-label p-0 avatar-md w-100" for="sidebar-size-small-hover">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -792,7 +767,8 @@
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-layout-style" id="sidebar-view-default" value="default">
+                                    <input class="form-check-input" type="radio" name="data-layout-style"
+                                        id="sidebar-view-default" value="default">
                                     <label class="form-check-label p-0 avatar-md w-100" for="sidebar-view-default">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -816,7 +792,8 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-layout-style" id="sidebar-view-detached" value="detached">
+                                    <input class="form-check-input" type="radio" name="data-layout-style"
+                                        id="sidebar-view-detached" value="detached">
                                     <label class="form-check-label p-0 avatar-md w-100" for="sidebar-view-detached">
                                         <span class="d-flex h-100 flex-column">
                                             <span class="bg-light d-flex p-1 gap-1 align-items-center px-2">
@@ -847,8 +824,10 @@
 
                         <div class="row">
                             <div class="col-4">
-                                <div class="form-check sidebar-setting card-radio" data-bs-toggle="collapse" data-bs-target="#collapseBgGradient.show">
-                                    <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-light" value="light">
+                                <div class="form-check sidebar-setting card-radio" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseBgGradient.show">
+                                    <input class="form-check-input" type="radio" name="data-sidebar"
+                                        id="sidebar-color-light" value="light">
                                     <label class="form-check-label p-0 avatar-md w-100" for="sidebar-color-light">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -871,8 +850,10 @@
                                 <h5 class="fs-13 text-center mt-2">Light</h5>
                             </div>
                             <div class="col-4">
-                                <div class="form-check sidebar-setting card-radio" data-bs-toggle="collapse" data-bs-target="#collapseBgGradient.show">
-                                    <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-dark" value="dark">
+                                <div class="form-check sidebar-setting card-radio" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseBgGradient.show">
+                                    <input class="form-check-input" type="radio" name="data-sidebar"
+                                        id="sidebar-color-dark" value="dark">
                                     <label class="form-check-label p-0 avatar-md w-100" for="sidebar-color-dark">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -895,7 +876,9 @@
                                 <h5 class="fs-13 text-center mt-2">Dark</h5>
                             </div>
                             <div class="col-4">
-                                <button class="btn btn-link avatar-md w-100 p-0 overflow-hidden border collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBgGradient" aria-expanded="false" aria-controls="collapseBgGradient">
+                                <button class="btn btn-link avatar-md w-100 p-0 overflow-hidden border collapsed"
+                                    type="button" data-bs-toggle="collapse" data-bs-target="#collapseBgGradient"
+                                    aria-expanded="false" aria-controls="collapseBgGradient">
                                     <span class="d-flex gap-1 h-100">
                                         <span class="flex-shrink-0">
                                             <span class="bg-vertical-gradient d-flex h-100 flex-column gap-1 p-1">
@@ -922,26 +905,34 @@
                             <div class="d-flex gap-2 flex-wrap img-switch p-2 px-3 bg-light rounded">
 
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-gradient" value="gradient">
-                                    <label class="form-check-label p-0 avatar-xs rounded-circle" for="sidebar-color-gradient">
+                                    <input class="form-check-input" type="radio" name="data-sidebar"
+                                        id="sidebar-color-gradient" value="gradient">
+                                    <label class="form-check-label p-0 avatar-xs rounded-circle"
+                                        for="sidebar-color-gradient">
                                         <span class="avatar-title rounded-circle bg-vertical-gradient"></span>
                                     </label>
                                 </div>
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-gradient-2" value="gradient-2">
-                                    <label class="form-check-label p-0 avatar-xs rounded-circle" for="sidebar-color-gradient-2">
+                                    <input class="form-check-input" type="radio" name="data-sidebar"
+                                        id="sidebar-color-gradient-2" value="gradient-2">
+                                    <label class="form-check-label p-0 avatar-xs rounded-circle"
+                                        for="sidebar-color-gradient-2">
                                         <span class="avatar-title rounded-circle bg-vertical-gradient-2"></span>
                                     </label>
                                 </div>
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-gradient-3" value="gradient-3">
-                                    <label class="form-check-label p-0 avatar-xs rounded-circle" for="sidebar-color-gradient-3">
+                                    <input class="form-check-input" type="radio" name="data-sidebar"
+                                        id="sidebar-color-gradient-3" value="gradient-3">
+                                    <label class="form-check-label p-0 avatar-xs rounded-circle"
+                                        for="sidebar-color-gradient-3">
                                         <span class="avatar-title rounded-circle bg-vertical-gradient-3"></span>
                                     </label>
                                 </div>
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-sidebar" id="sidebar-color-gradient-4" value="gradient-4">
-                                    <label class="form-check-label p-0 avatar-xs rounded-circle" for="sidebar-color-gradient-4">
+                                    <input class="form-check-input" type="radio" name="data-sidebar"
+                                        id="sidebar-color-gradient-4" value="gradient-4">
+                                    <label class="form-check-label p-0 avatar-xs rounded-circle"
+                                        for="sidebar-color-gradient-4">
                                         <span class="avatar-title rounded-circle bg-vertical-gradient-4"></span>
                                     </label>
                                 </div>
@@ -955,37 +946,47 @@
 
                         <div class="d-flex gap-2 flex-wrap img-switch">
                             <div class="form-check sidebar-setting card-radio">
-                                <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-none" value="none">
+                                <input class="form-check-input" type="radio" name="data-sidebar-image"
+                                    id="sidebarimg-none" value="none">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-none">
-                                    <span class="avatar-md w-auto bg-light d-flex align-items-center justify-content-center">
+                                    <span
+                                        class="avatar-md w-auto bg-light d-flex align-items-center justify-content-center">
                                         <i class="ri-close-fill fs-20"></i>
                                     </span>
                                 </label>
                             </div>
 
                             <div class="form-check sidebar-setting card-radio">
-                                <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-01" value="img-1">
+                                <input class="form-check-input" type="radio" name="data-sidebar-image"
+                                    id="sidebarimg-01" value="img-1">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-01">
-                                    <img src="assets/images/sidebar/img-1.jpg" alt="" class="avatar-md w-auto object-cover">
+                                    <img src="../private/assets/images/sidebar/img-1.jpg" alt=""
+                                        class="avatar-md w-auto object-cover">
                                 </label>
-                            </div>	
+                            </div>
 
                             <div class="form-check sidebar-setting card-radio">
-                                <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-02" value="img-2">
+                                <input class="form-check-input" type="radio" name="data-sidebar-image"
+                                    id="sidebarimg-02" value="img-2">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-02">
-                                    <img src="assets/images/sidebar/img-2.jpg" alt="" class="avatar-md w-auto object-cover">
+                                    <img src="../private/assets/images/sidebar/img-2.jpg" alt=""
+                                        class="avatar-md w-auto object-cover">
                                 </label>
                             </div>
                             <div class="form-check sidebar-setting card-radio">
-                                <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-03" value="img-3">
+                                <input class="form-check-input" type="radio" name="data-sidebar-image"
+                                    id="sidebarimg-03" value="img-3">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-03">
-                                    <img src="assets/images/sidebar/img-3.jpg" alt="" class="avatar-md w-auto object-cover">
+                                    <img src="../private/assets/images/sidebar/img-3.jpg" alt=""
+                                        class="avatar-md w-auto object-cover">
                                 </label>
                             </div>
                             <div class="form-check sidebar-setting card-radio">
-                                <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-04" value="img-4">
+                                <input class="form-check-input" type="radio" name="data-sidebar-image"
+                                    id="sidebarimg-04" value="img-4">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-04">
-                                    <img src="assets/images/sidebar/img-4.jpg" alt="" class="avatar-md w-auto object-cover">
+                                    <img src="../private/assets/images/sidebar/img-4.jpg" alt=""
+                                        class="avatar-md w-auto object-cover">
                                 </label>
                             </div>
                         </div>
@@ -994,11 +995,12 @@
                     <div id="preloader-menu">
                         <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Preloader</h6>
                         <p class="text-muted">Choose a preloader.</p>
-                    
+
                         <div class="row">
                             <div class="col-4">
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-preloader" id="preloader-view-custom" value="enable">
+                                    <input class="form-check-input" type="radio" name="data-preloader"
+                                        id="preloader-view-custom" value="enable">
                                     <label class="form-check-label p-0 avatar-md w-100" for="preloader-view-custom">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -1029,7 +1031,8 @@
                             </div>
                             <div class="col-4">
                                 <div class="form-check sidebar-setting card-radio">
-                                    <input class="form-check-input" type="radio" name="data-preloader" id="preloader-view-none" value="disable">
+                                    <input class="form-check-input" type="radio" name="data-preloader"
+                                        id="preloader-view-none" value="disable">
                                     <label class="form-check-label p-0 avatar-md w-100" for="preloader-view-none">
                                         <span class="d-flex gap-1 h-100">
                                             <span class="flex-shrink-0">
@@ -1052,7 +1055,7 @@
                                 <h5 class="fs-13 text-center mt-2">Disable</h5>
                             </div>
                         </div>
-                    
+
                     </div>
                     <!-- end preloader-menu -->
 
@@ -1070,27 +1073,27 @@
     </div>
 
     <!-- JAVASCRIPT -->
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="assets/libs/node-waves/waves.min.js"></script>
-    <script src="assets/libs/feather-icons/feather.min.js"></script>
-    <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
-    <script src="assets/js/plugins.js"></script>
+    <script src="../private/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../private/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="../private/assets/libs/node-waves/waves.min.js"></script>
+    <script src="../private/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="../private/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="../private/assets/js/plugins.js"></script>
 
     <!-- list.js min js -->
-    <script src="assets/libs/list.js/list.min.js"></script>
+    <script src="../private/assets/libs/list.js/list.min.js"></script>
 
     <!--list pagination js-->
-    <script src="assets/libs/list.pagination.js/list.pagination.min.js"></script>
+    <script src="../private/assets/libs/list.pagination.js/list.pagination.min.js"></script>
 
     <!-- titcket init js -->
-    <script src="assets/js/pages/tasks-list.init.js"></script>
+    <script src="../private/assets/js/pages/tasks-list.init.js"></script>
 
     <!-- Sweet Alerts js -->
-    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="../private/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <!-- App js -->
-    <script src="assets/js/app.js"></script>
+    <script src="../private/assets/js/app.js"></script>
 </body>
 
 </html>
