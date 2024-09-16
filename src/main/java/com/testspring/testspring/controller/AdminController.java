@@ -177,7 +177,55 @@ public class AdminController {
 
     // Affiche la page de profile de l'administrateur authentifier
     @GetMapping("/admin/mon-profile")
-    public String monProfile() {
+    public String monProfile(Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            String nom;
+            String prenom;
+            String image;
+            String age;
+            String sexe;
+            String numero;
+            String role;
+            String email;
+            Date createdAt;
+            if (principal instanceof CustomUserDetails) {
+                CustomUserDetails userDetails = (CustomUserDetails) principal;
+                nom = userDetails.getNom(); // Récupérer le nom
+                prenom = userDetails.getPrenom(); // Récupérer le prénom
+                image = userDetails.getImage(); // Récupérer l'image
+                age = userDetails.getAge(); // Récupérer l'âge
+                sexe = userDetails.getSexe(); // Récupérer le sexe
+                numero = userDetails.getNumero(); // Récupérer le numéro
+                role = userDetails.getRole(); // Récupérer le role
+                email = userDetails.getUsername(); // Récupérer l'email
+                createdAt = userDetails.getCreatedAt(); // Récupérer le nom
+            } else {
+                nom = "Inconnu";
+                prenom = "Inconnu";
+                image = "Inconnu";
+                age = "Inconnu";
+                sexe = "Inconnu";
+                numero = "Inconnu";
+                role = "Inconnu";
+                email = "Inconnu";
+                createdAt = new Date(); // Valeur par défaut
+            }
+
+            model.addAttribute("nom", nom);
+            model.addAttribute("prenom", prenom);
+            model.addAttribute("image", image);
+            model.addAttribute("age", age);
+            model.addAttribute("sexe", sexe);
+            model.addAttribute("numero", numero);
+            model.addAttribute("role", role);
+            model.addAttribute("email", email);
+            model.addAttribute("createdAt", createdAt);
+        }
         return "private/admin/pages-profile";
     }
 
