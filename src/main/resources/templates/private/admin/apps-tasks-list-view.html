@@ -321,7 +321,8 @@
                                                                 name="chk_child" value="option1">
                                                         </div>
                                                     </th>
-                                                    <td class="id"><a href="details-utilisateur"
+                                                    <td class="id"><a
+                                                            th:href="@{/admin/details-utilisateur-{id}(id=${user.id})}"
                                                             class="fw-medium link-primary"><span
                                                                 th:text="${user.id}"></span></a></td>
                                                     <td class="assignedto">
@@ -343,7 +344,7 @@
                                                             <div class="flex-shrink-0 ms-4">
                                                                 <ul class="list-inline tasks-list-menu mb-0">
                                                                     <li class="list-inline-item"><a
-                                                                            href="details-utilisateur"><i
+                                                                            th:href="@{/admin/details-utilisateur-{id}(id=${user.id})}"><i
                                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
                                                                     </li>
                                                                     <li class="list-inline-item"><a
@@ -364,8 +365,14 @@
                                                     </td>
                                                     <td class="client_name"><span th:text="${user.age}"></span></td>
                                                     <td class="status">
-                                                        <span class="badge badge-soft-secondary text-uppercase"
-                                                            th:text="${user.role}"></span>
+                                                        <div th:if="${user.role == 'utilisateur'}">
+                                                            <span class="badge badge-soft-secondary text-uppercase"
+                                                                th:text="${user.role}"></span>
+                                                        </div>
+                                                        <div th:if="${user.role == 'administrateur'}">
+                                                            <span class="badge badge-soft-danger text-uppercase"
+                                                                th:text="${user.role}"></span>
+                                                        </div>
                                                     </td>
                                                     <td class="due_date"><span th:text="${user.createdAt}"></span></td>
                                                 </tr>

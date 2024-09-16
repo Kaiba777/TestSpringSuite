@@ -32,6 +32,7 @@ import com.testspring.testspring.service.CustomUserDetails;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -95,7 +96,7 @@ public class AdminController {
         return new ModelAndView("private/admin/apps-tasks-list-view", "users", list);
     }
 
-    // Affiche la page d'ajout d'utilisateur par l'administrateur authentifier
+    // Affiche la page d'ajout d'un utilisateur par l'administrateur authentifier
     @GetMapping("/admin/ajout-utilisateur")
     public String ajoutUtilisateur(Model model) {
         AdminInscriptionDto adminInscriptionDto = new AdminInscriptionDto();
@@ -187,8 +188,10 @@ public class AdminController {
     }
 
     // Affiche les détails d'un utilisateur
-    @GetMapping("/admin/details-utilisateur")
-    public String detailsUtilisateur() {
+    @RequestMapping("/admin/details-utilisateur-{id}")
+    public String detailsUtilisateur(@PathVariable("id") int id, Model model) {
+        AppUser appUser = service.getAppUserById(id);
+        model.addAttribute("user", appUser);
         return "private/admin/apps-tasks-details";
     }
 }

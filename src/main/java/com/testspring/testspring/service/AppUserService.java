@@ -42,4 +42,9 @@ public class AppUserService implements UserDetailsService {
         return repo.findAll();
     }
 
+    // Permet de récupérer un utilisateur par l'id
+    public AppUser getAppUserById(int id) {
+        return repo.findById(id).get();
+    }
+
 }
