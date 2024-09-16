@@ -1,10 +1,17 @@
 package com.testspring.testspring.controller;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,17 +21,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.testspring.testspring.model.AdminInscriptionDto;
 import com.testspring.testspring.model.AppUser;
 import com.testspring.testspring.repositorie.AppUserRepository;
+import com.testspring.testspring.service.AppUserService;
 import com.testspring.testspring.service.CustomUserDetails;
 
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class AdminController {
@@ -32,12 +43,41 @@ public class AdminController {
     @Autowired
     private AppUserRepository repo;
 
+    @Autowired
+    private AppUserService service;
+
     @Value("${file.upload-dir}")
     private String uploadDir;
 
+    @GetMapping("/uploads/{filename:.+}")
+    @ResponseBody
+    public ResponseEntity serveFile(@PathVariable String filename) {
+        try {
+            // Créer le chemin vers le fichier
+            Path file = Paths.get(uploadDir).resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+
+            // Vérifier si le fichier existe et est lisible
+            if (resource.exists() || resource.isReadable()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION,
+                                "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     // Affiche le tableau de bord de l'administrateur authentifier
     @GetMapping("/admin/tableau-de-bord")
-    public String admin(Model model) {
+    public ModelAndView admin(Model model) {
+
+        // Permet de récupérer tous les utilisateurs
+        List<AppUser> list = service.getAllAppUsers();
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
@@ -52,7 +92,7 @@ public class AdminController {
 
             model.addAttribute("nom", nom);
         }
-        return "private/admin/apps-tasks-list-view";
+        return new ModelAndView("private/admin/apps-tasks-list-view", "users", list);
     }
 
     // Affiche la page d'ajout d'utilisateur par l'administrateur authentifier
@@ -107,7 +147,7 @@ public class AdminController {
             nouveauUtilisateur.setNom(adminInscriptionDto.getNom());
             nouveauUtilisateur.setPrenom(adminInscriptionDto.getPrenom());
             nouveauUtilisateur.setEmail(adminInscriptionDto.getEmail());
-            nouveauUtilisateur.setImage(filePath);
+            nouveauUtilisateur.setImage(fileName);
             nouveauUtilisateur.setAge(adminInscriptionDto.getAge());
             nouveauUtilisateur.setSexe(adminInscriptionDto.getSexe());
             nouveauUtilisateur.setNumero(adminInscriptionDto.getNumero());

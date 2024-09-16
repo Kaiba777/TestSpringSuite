@@ -37,4 +37,9 @@ public class AppUserService implements UserDetailsService {
         throw new UsernameNotFoundException("User not found with email: " + email);
     }
 
+    // Permet de récupérer tous les utilisateurs
+    public List<AppUser> getAllAppUsers() {
+        return repo.findAll();
+    }
+
 }

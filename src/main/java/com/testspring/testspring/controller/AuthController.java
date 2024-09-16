@@ -87,7 +87,7 @@ public class AuthController {
             nouveauUtilisateur.setNom(inscriptionDto.getNom());
             nouveauUtilisateur.setPrenom(inscriptionDto.getPrenom());
             nouveauUtilisateur.setEmail(inscriptionDto.getEmail());
-            nouveauUtilisateur.setImage(filePath);
+            nouveauUtilisateur.setImage(fileName);
             nouveauUtilisateur.setAge(inscriptionDto.getAge());
             nouveauUtilisateur.setSexe(inscriptionDto.getSexe());
             nouveauUtilisateur.setNumero(inscriptionDto.getNumero());

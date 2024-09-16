@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .requestMatchers("private/assets/libs/feather-icons/**").permitAll()
                 .requestMatchers("private/assets/libs/particles.js/**").permitAll()
                 .requestMatchers("private/assets/libs/feather-icons/**").permitAll()
+                .requestMatchers("C:/Users/USER/Downloads/Compressed/TestSpring/uploads/**").permitAll()
 
                 .requestMatchers("/admin/**").hasAuthority("ROLE_administrateur")
                 .requestMatchers("/user/**").hasAuthority("ROLE_utilisateur")
