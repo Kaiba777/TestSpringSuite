@@ -105,10 +105,10 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
                                     <img class="rounded-circle header-profile-user"
-                                        src="../private/assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                                        th:src="@{/uploads/{image}(image=${image})}" alt="Header Avatar">
                                     <span class="text-start ms-xl-2">
-                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Anna
-                                            Adame</span>
+                                        <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"
+                                            th:text="${nom}"></span>
                                     </span>
                                 </span>
                             </button>
@@ -348,8 +348,8 @@
                                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
                                                                     </li>
                                                                     <li class="list-inline-item"><a
-                                                                            class="edit-item-btn" href="#showModal"
-                                                                            data-bs-toggle="modal"><i
+                                                                            class="edit-item-btn"
+                                                                            th:href="@{/admin/modifier-utilisateur-{id}(id=${user.id})}"><i
                                                                                 class="ri-pencil-fill align-bottom me-2 text-muted"></i></a>
                                                                     </li>
                                                                     <li class="list-inline-item">
@@ -433,92 +433,6 @@
                         </div>
                     </div>
                     <!--end delete modal -->
-
-                    <div class="modal fade zoomIn" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content border-0">
-                                <div class="modal-header p-3 bg-soft-info">
-                                    <h5 class="modal-title" id="exampleModal">Modifier un utilisateur</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                        id="close-modal"></button>
-                                </div>
-                                <form action="">
-                                    <div class="modal-body">
-                                        <input type="hidden" id="tasksId" />
-                                        <div class="row g-3">
-                                            <div class="col-lg-12">
-                                                <label for="projectName-field" class="form-label">Nom & Prénom</label>
-                                                <input type="text" id="projectName-field" class="form-control"
-                                                    placeholder="Nom et Prénom" required />
-                                            </div>
-                                            <!--end col-->
-
-                                            <div class="col-lg-12">
-                                                <label for="projectName-field" class="form-label">Photo</label>
-                                                <input type="file" id="projectName-field" class="form-control"
-                                                    required />
-                                            </div>
-                                            <!--end col-->
-
-                                            <div class="col-lg-12">
-                                                <label for="projectName-field" class="form-label">Mot de passe</label>
-                                                <input type="password" id="projectName-field" class="form-control"
-                                                    placeholder="Entrez votre mot de passe" required />
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-lg-12">
-                                                <div>
-                                                    <label for="tasksTitle-field" class="form-label">Email</label>
-                                                    <input type="email" id="tasksTitle-field" class="form-control"
-                                                        placeholder="Title" required />
-                                                </div>
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-lg-12">
-                                                <label for="projectName-field" class="form-label">Sexe</label>
-                                                <input type="text" id="projectName-field" class="form-control"
-                                                    placeholder="Entrez sexe" required />
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-lg-12">
-                                                <label for="projectName-field" class="form-label">Age</label>
-                                                <input type="number" id="projectName-field" class="form-control"
-                                                    placeholder="Entrez votre âge" required />
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-lg-12">
-                                                <label for="projectName-field" class="form-label">Numéro de
-                                                    Téléphone</label>
-                                                <input type="tel" id="projectName-field" class="form-control"
-                                                    placeholder="Entrez votre numéro de téléphone" required />
-                                            </div>
-                                            <!--end col-->
-                                            <div class="col-lg-12">
-                                                <label for="projectName-field" class="form-label">Role</label>
-                                                <input type="text" id="projectName-field" class="form-control"
-                                                    placeholder="Entrez le role de l'utilisateur" required />
-                                            </div>
-                                            <!--end col-->
-
-
-
-
-                                        </div>
-                                        <!--end row-->
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="hstack gap-2 justify-content-end">
-                                            <button type="button" class="btn btn-light" id="close-modal"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success" id="add-btn">Modifier</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!--end modal-->
 
                 </div>
                 <!-- container-fluid -->

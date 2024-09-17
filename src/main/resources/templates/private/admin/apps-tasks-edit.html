@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="fr" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
-    data-sidebar-image="none" data-preloader="disable">
+    data-sidebar-image="none" data-preloader="disable" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="utf-8" />
-    <title>Mon profile</title>
+    <title>Modifier un utilisateur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     <link rel="shortcut icon" th:href="@{../private/assets/images/favicon.ico}">
 
-    <!-- swiper css -->
-    <link rel="stylesheet" th:href="@{../private/assets/libs/swiper/swiper-bundle.min.css}">
+    <!-- Sweet Alert css-->
+    <link th:href="@{../private/assets/libs/sweetalert2/sweetalert2.min.css}" rel="stylesheet" type="text/css" />
 
     <!-- Layout config Js -->
     <script src="../private/assets/js/layout.js"></script>
@@ -174,7 +174,11 @@
                                 Tableaux de bord </a>
                         </li>
                         <li class="nav-item">
-                            <a href="mon-profile" class="nav-link active">
+                            <a href="#" class="nav-link active">
+                                Modifier un Utilisateur </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="mon-profile" class="nav-link">
                                 Mon profile </a>
                         </li>
                         <li class="nav-item">
@@ -202,119 +206,85 @@
 
             <div class="page-content">
                 <div class="container-fluid">
-                    <div class="profile-foreground position-relative mx-n4 mt-n4">
-                        <div class="profile-wid-bg">
-                            <img src="../private/assets/images/profile-bg.jpg" alt="" class="profile-wid-img" />
-                        </div>
-                    </div>
-                    <div class="pt-4 mb-4 mb-lg-3 pb-lg-4">
-                        <div class="row g-4">
-                            <div class="col-auto">
-                                <div class="avatar-lg">
-                                    <img th:src="@{/uploads/{image}(image=${image})}" alt="user-img"
-                                        class="img-thumbnail rounded-circle" />
-                                </div>
-                            </div>
-                            <!--end col-->
-                            <div class="col">
-                                <div class="p-2">
-                                    <h3 class="text-white mb-1"><span th:text="${nom}"></span> <span
-                                            th:text="${prenom}"></span></h3>
-                                    <p class="text-white-75" th:text="${role}"></p>
-                                </div>
-                            </div>
-                            <!--end col-->
-
-                        </div>
-                        <!--end row-->
-                    </div>
-
+                    <!-- start page title -->
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div>
-                                <div class="d-flex">
-                                    <!-- Nav tabs -->
-                                    <ul class="nav nav-pills animation-nav profile-nav gap-2 gap-lg-3 flex-grow-1"
-                                        role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link fs-14 active" data-bs-toggle="tab" href="#overview-tab"
-                                                role="tab">
-                                                <i class="ri-airplay-fill d-inline-block d-md-none"></i> <span
-                                                    class="d-none d-md-inline-block">Aperçu</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="flex-shrink-0">
-                                        <a href="modifier-mon-profile" class="btn btn-success"><i
-                                                class="ri-edit-box-line align-bottom"></i> Modifier mon profile</a>
-                                    </div>
-                                </div>
-                                <!-- Tab panes -->
-                                <div class="tab-content pt-4 text-muted">
-                                    <div class="tab-pane active" id="overview-tab" role="tabpanel">
-                                        <div class="row">
-                                            <div class="col-xxl-3">
-
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title mb-3">Info</h5>
-                                                        <div class="table-responsive">
-                                                            <table class="table table-borderless mb-0">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th class="ps-0" scope="row">Nom & Prénom :</th>
-                                                                        <td class="text-muted"><span
-                                                                                th:text="${nom}"></span> <span
-                                                                                th:text="${prenom}"></span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th class="ps-0" scope="row">Numéro de Téléphone
-                                                                            :</th>
-                                                                        <td class="text-muted">+226 <span
-                                                                                th:text="${numero}"></span></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th class="ps-0" scope="row">E-mail :</th>
-                                                                        <td class="text-muted" th:text="${email}"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th class="ps-0" scope="row">Sexe :</th>
-                                                                        <td class="text-muted" th:text="${sexe}"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th class="ps-0" scope="row">Age :</th>
-                                                                        <td class="text-muted" th:text="${age}"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th class="ps-0" scope="row">Role :</th>
-                                                                        <td class="text-muted" th:text="${role}"></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th class="ps-0" scope="row">Date de Création :
-                                                                        </th>
-                                                                        <td class="text-muted" th:text="${createdAt}">
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div><!-- end card body -->
-                                                </div><!-- end card -->
-                                            </div>
-                                            <!--end col-->
-                                        </div>
-                                        <!--end row-->
-                                    </div>
-                                </div>
-                                <!--end tab-content-->
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Modifier un Utilisateur</h4>
                             </div>
                         </div>
-                        <!--end col-->
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row card pt-3 ps-2 pb-4 pe-2">
+                        <div class="col-lg-12">
+                            <form th:action="@{/modifie}" method="post" enctype="multipart/form-data"
+                                th:object="${user}">
+                                <input type="hidden" name="id" th:value="${user.id}">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                <div>
+                                    <div class="row g-3">
+                                        <div class="col-lg-6">
+                                            <label class="form-label">Nom</label>
+                                            <input type="text" class="form-control" name="nom" th:value="${user.nom}" />
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-6">
+                                            <label class="form-label">Prénom</label>
+                                            <input type="text" class="form-control" name="prenom"
+                                                th:value="${user.prenom}" />
+                                        </div>
+                                        <!--end col-->
+
+                                        <div class="col-lg-12">
+                                            <label class="form-label">Photo</label>
+                                            <input type="file" class="form-control" name="image" />
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-4">
+                                            <div>
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control" name="email"
+                                                    th:value="${user.email}" />
+                                            </div>
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-4">
+                                            <label class="form-label">Sexe</label>
+                                            <input type="text" class="form-control" name="sexe"
+                                                th:value="${user.sexe}" />
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-4">
+                                            <label class="form-label">Age</label>
+                                            <input type="number" class="form-control" name="age"
+                                                th:value="${user.age}" />
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-6">
+                                            <label class="form-label">Numéro de Téléphone</label>
+                                            <input type="tel" class="form-control" name="numero"
+                                                th:value="${user.numero}" />
+                                        </div>
+                                        <!--end col-->
+                                        <div class="col-lg-6">
+                                            <label class="form-label">Role</label>
+                                            <input type="text" class="form-control" name="role"
+                                                th:value="${user.role}" />
+                                        </div>
+                                        <!--end col-->
+                                    </div>
+                                    <!--end row-->
+                                </div>
+                                <input class="btn btn-success mt-3" type="submit" value="Modifier">
+                            </form>
+                        </div>
                     </div>
                     <!--end row-->
-
-                </div><!-- container-fluid -->
-            </div><!-- End Page-content -->
+                </div>
+                <!-- container-fluid -->
+            </div>
+            <!-- End Page-content -->
 
             <footer class="footer">
                 <div class="container-fluid">
@@ -332,7 +302,8 @@
                     </div>
                 </div>
             </footer>
-        </div><!-- end main content-->
+        </div>
+        <!-- end main content-->
 
     </div>
     <!-- END layout-wrapper -->
@@ -1073,11 +1044,17 @@
     <script src="../private/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="../private/assets/js/plugins.js"></script>
 
-    <!-- swiper js -->
-    <script src="../private/assets/libs/swiper/swiper-bundle.min.js"></script>
+    <!-- list.js min js -->
+    <script src="../private/assets/libs/list.js/list.min.js"></script>
 
-    <!-- profile init js -->
-    <script src="../private/assets/js/pages/profile.init.js"></script>
+    <!--list pagination js-->
+    <script src="../private/assets/libs/list.pagination.js/list.pagination.min.js"></script>
+
+    <!-- titcket init js -->
+    <script src="../private/assets/js/pages/tasks-list.init.js"></script>
+
+    <!-- Sweet Alerts js -->
+    <script src="../private/assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
     <!-- App js -->
     <script src="../private/assets/js/app.js"></script>

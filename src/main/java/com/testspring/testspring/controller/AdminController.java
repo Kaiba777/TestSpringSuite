@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.testspring.testspring.model.AdminInscriptionDto;
+import com.testspring.testspring.model.AdminModificationDto;
 import com.testspring.testspring.model.AppUser;
 import com.testspring.testspring.repositorie.AppUserRepository;
 import com.testspring.testspring.service.AppUserService;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import java.io.IOException;
 
 @Controller
 public class AdminController {
@@ -85,13 +87,18 @@ public class AdminController {
             Object principal = authentication.getPrincipal();
 
             String nom;
+            String image;
             if (principal instanceof CustomUserDetails) {
-                nom = ((CustomUserDetails) principal).getNom(); // Récupérer le nom
+                CustomUserDetails userDetails = (CustomUserDetails) principal;
+                nom = userDetails.getNom(); // Récupérer le nom
+                image = userDetails.getImage(); // Récupérer l'image
             } else {
                 nom = "Inconnu";
+                image = "Inconnu";
             }
 
             model.addAttribute("nom", nom);
+            model.addAttribute("image", image);
         }
         return new ModelAndView("private/admin/apps-tasks-list-view", "users", list);
     }
@@ -101,6 +108,26 @@ public class AdminController {
     public String ajoutUtilisateur(Model model) {
         AdminInscriptionDto adminInscriptionDto = new AdminInscriptionDto();
         model.addAttribute(adminInscriptionDto);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            String nom;
+            String image;
+            if (principal instanceof CustomUserDetails) {
+                CustomUserDetails userDetails = (CustomUserDetails) principal;
+                nom = userDetails.getNom(); // Récupérer le nom
+                image = userDetails.getImage(); // Récupérer l'image
+            } else {
+                nom = "Inconnu";
+                image = "Inconnu";
+            }
+
+            model.addAttribute("nom", nom);
+            model.addAttribute("image", image);
+        }
         return "private/admin/apps-tasks-create";
     }
 
@@ -231,7 +258,26 @@ public class AdminController {
 
     // Affiche la page de modification du profile de l'administrateur authentifier
     @GetMapping("/admin/modifier-mon-profile")
-    public String ModifierMonProfile() {
+    public String ModifierMonProfile(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            String nom;
+            String image;
+            if (principal instanceof CustomUserDetails) {
+                CustomUserDetails userDetails = (CustomUserDetails) principal;
+                nom = userDetails.getNom(); // Récupérer le nom
+                image = userDetails.getImage(); // Récupérer l'image
+            } else {
+                nom = "Inconnu";
+                image = "Inconnu";
+            }
+
+            model.addAttribute("nom", nom);
+            model.addAttribute("image", image);
+        }
         return "private/admin/pages-profile-settings";
     }
 
@@ -240,6 +286,118 @@ public class AdminController {
     public String detailsUtilisateur(@PathVariable("id") int id, Model model) {
         AppUser appUser = service.getAppUserById(id);
         model.addAttribute("user", appUser);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            String nom;
+            String image;
+            if (principal instanceof CustomUserDetails) {
+                CustomUserDetails userDetails = (CustomUserDetails) principal;
+                nom = userDetails.getNom(); // Récupérer le nom
+                image = userDetails.getImage(); // Récupérer l'image
+            } else {
+                nom = "Inconnu";
+                image = "Inconnu";
+            }
+
+            model.addAttribute("nom", nom);
+            model.addAttribute("image", image);
+        }
         return "private/admin/apps-tasks-details";
     }
+
+    // Affiche la page de modification d'un utilisateur par l'administrateur
+    @RequestMapping("/admin/modifier-utilisateur-{id}")
+    public String modifierUtilisateur(@PathVariable("id") int id, Model model) {
+
+        AppUser appUser = service.getAppUserById(id);
+        model.addAttribute("user", appUser);
+
+        AdminModificationDto adminModificationDto = new AdminModificationDto();
+        model.addAttribute(adminModificationDto);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            String nom;
+            String image;
+            if (principal instanceof CustomUserDetails) {
+                CustomUserDetails userDetails = (CustomUserDetails) principal;
+                nom = userDetails.getNom(); // Récupérer le nom
+                image = userDetails.getImage(); // Récupérer l'image
+            } else {
+                nom = "Inconnu";
+                image = "Inconnu";
+            }
+
+            model.addAttribute("nom", nom);
+            model.addAttribute("image", image);
+        }
+        return "private/admin/apps-tasks-edit";
+    }
+
+    // Permet de traiter les données de la page de modification
+    @PostMapping("/modifie")
+    public String modifierUtilisateur(Model model, @Valid @ModelAttribute AdminModificationDto adminModificationDto,
+            @RequestParam("image") MultipartFile file) {
+
+        try {
+            // Récupérer l'utilisateur existant à partir de la base de données
+            AppUser existingUser = service.getAppUserById(adminModificationDto.getId());
+            if (existingUser == null) {
+                // Gérer le cas où l'utilisateur n'existe pas (afficher une erreur, etc.)
+                return "redirect:/admin/error";
+            }
+
+            // Répertoire d'upload relatif à la racine du projet
+            String uploadDir = System.getProperty("user.dir") + "/uploads/";
+
+            // Créez le répertoire s'il n'existe pas
+            File uploadDirectory = new File(uploadDir);
+            if (!uploadDirectory.exists()) {
+                uploadDirectory.mkdirs();
+            }
+
+            // Si un nouveau fichier est uploadé
+            if (!file.isEmpty()) {
+                // Supprimer l'ancienne image si elle existe
+                if (existingUser.getImage() != null && !existingUser.getImage().isEmpty()) {
+                    File oldImage = new File(uploadDir + existingUser.getImage());
+                    if (oldImage.exists()) {
+                        oldImage.delete();
+                    }
+                }
+
+                // Enregistrer le nouveau fichier
+                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File newImage = new File(uploadDir + fileName);
+                file.transferTo(newImage);
+
+                // Mettre à jour le chemin de la nouvelle image
+                existingUser.setImage(fileName);
+            }
+
+            // Mettre à jour les autres informations de l'utilisateur
+            existingUser.setNom(adminModificationDto.getNom());
+            existingUser.setPrenom(adminModificationDto.getPrenom());
+            existingUser.setEmail(adminModificationDto.getEmail());
+            existingUser.setAge(adminModificationDto.getAge());
+            existingUser.setSexe(adminModificationDto.getSexe());
+            existingUser.setNumero(adminModificationDto.getNumero());
+            existingUser.setRole(adminModificationDto.getRole());
+
+            // Sauvegarder les modifications dans la base de données
+            service.sauvegarder(existingUser);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Ajoutez une gestion d'erreur appropriée ici
+        }
+        return "redirect:/admin/tableau-de-bord";
+    }
+
 }

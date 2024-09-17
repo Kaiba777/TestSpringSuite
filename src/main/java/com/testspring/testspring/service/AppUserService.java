@@ -47,4 +47,9 @@ public class AppUserService implements UserDetailsService {
         return repo.findById(id).get();
     }
 
+    // Permet de sauvegarder les informations d'un utilisateur
+    public void sauvegarder(AppUser appUser) {
+        repo.save(appUser);
+    }
+
 }
