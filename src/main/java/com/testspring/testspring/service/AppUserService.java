@@ -62,4 +62,14 @@ public class AppUserService implements UserDetailsService {
         return repo.findByEmail(email);
     }
 
+    // Permet de récupérer tous le nombre d'utilisateur
+    public long countUsers() {
+        return repo.count();
+    }
+
+    // Récupérer le nombre d'administrateur
+    public long countAdmin() {
+        return repo.countByRole("administrateur");
+    }
+
 }

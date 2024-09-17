@@ -81,6 +81,12 @@ public class AdminController {
     @GetMapping("/admin/tableau-de-bord")
     public ModelAndView admin(Model model) {
 
+        // Récupère le nombre d'utilisateur
+        long totalUtilisateurs = service.countUsers();
+
+        // Récupère le nombre d'administrateur
+        long totalAdmins = service.countAdmin();
+
         // Permet de récupérer tous les utilisateurs
         List<AppUser> list = service.getAllAppUsers();
 
@@ -103,6 +109,9 @@ public class AdminController {
             model.addAttribute("nom", nom);
             model.addAttribute("image", image);
         }
+
+        model.addAttribute("totalUtilisateurs", totalUtilisateurs);
+        model.addAttribute("totalAdmins", totalAdmins);
         return new ModelAndView("private/admin/apps-tasks-list-view", "users", list);
     }
 
