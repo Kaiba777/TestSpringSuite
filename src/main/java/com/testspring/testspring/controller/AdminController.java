@@ -395,8 +395,13 @@ public class AdminController {
             service.sauvegarder(existingUser);
         } catch (IOException e) {
             e.printStackTrace();
-            // Ajoutez une gestion d'erreur appropriée ici
         }
+        return "redirect:/admin/tableau-de-bord";
+    }
+
+    @RequestMapping("/admin/supprimer-utilisateur-{id}")
+    public String supprimerUtilisateur(@PathVariable("id") int id) {
+        service.deleteById(id);
         return "redirect:/admin/tableau-de-bord";
     }
 

@@ -52,4 +52,9 @@ public class AppUserService implements UserDetailsService {
         repo.save(appUser);
     }
 
+    // Permet de supprimer un utilisateur
+    public void deleteById(int id) {
+        repo.deleteById(id);
+    }
+
 }
