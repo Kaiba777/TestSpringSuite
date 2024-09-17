@@ -112,7 +112,7 @@
                             <div class="dropdown-menu dropdown-menu-end">
                                 <!-- item-->
                                 <h6 class="dropdown-header">Bienvenue <span th:text="${nom}"></span>!</h6>
-                                <a class="dropdown-item" href="pages-profile.html"><i
+                                <a class="dropdown-item" href="/admin/mon-profile"><i
                                         class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                         class="align-middle">Mon profile</span></a>
                                 <div class="dropdown-divider"></div>
@@ -240,21 +240,22 @@
                                 <div class="card-body p-4">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="personalDetails" role="tabpanel">
-                                            <form action="javascript:void(0);">
+                                            <form th:action="@{/modifier-mon-profile}" method="post"
+                                                enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="firstnameInput" class="form-label">Nom</label>
-                                                            <input type="text" class="form-control" id="firstnameInput"
-                                                                placeholder="Enter your firstname" value="Dave">
+                                                            <input type="text" class="form-control" name="nom"
+                                                                th:value="${nom}">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="lastnameInput" class="form-label">Prénom</label>
-                                                            <input type="text" class="form-control" id="lastnameInput"
-                                                                placeholder="Enter your lastname" value="Adame">
+                                                            <input type="text" class="form-control" name="prenom"
+                                                                th:value="${prenom}">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -262,19 +263,16 @@
                                                         <div class="mb-3">
                                                             <label for="phonenumberInput" class="form-label">Numéro de
                                                                 téléphone</label>
-                                                            <input type="text" class="form-control"
-                                                                id="phonenumberInput"
-                                                                placeholder="Enter your phone number"
-                                                                value="+(1) 987 6543">
+                                                            <input type="number" class="form-control" name="numero"
+                                                                th:value="${numero}">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="emailInput" class="form-label">Email</label>
-                                                            <input type="email" class="form-control" id="emailInput"
-                                                                placeholder="Enter your email"
-                                                                value="daveadame@velzon.com">
+                                                            <input type="email" class="form-control" name="email"
+                                                                th:value="${email}">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -282,30 +280,31 @@
                                                         <div class="mb-3">
                                                             <label for="JoiningdatInput"
                                                                 class="form-label">Photo</label>
-                                                            <input type="file" class="form-control"
-                                                                id="JoiningdatInput" />
+                                                            <input type="file" class="form-control" name="image" />
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">Sexe</label>
-                                                            <input type="text" class="form-control" value="Masculin">
+                                                            <input type="text" class="form-control" name="sexe"
+                                                                th:value="${sexe}">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="emailInput" class="form-label">Age</label>
-                                                            <input type="number" class="form-control" value="20">
+                                                            <input type="number" class="form-control" name="age"
+                                                                th:value="${age}">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label for="JoiningdatInput" class="form-label">Role</label>
-                                                            <input type="text" class="form-control"
-                                                                value="Administrateur" />
+                                                            <input type="text" class="form-control" name="role"
+                                                                th:value="${role}" />
                                                         </div>
                                                     </div>
                                                     <!--end col-->

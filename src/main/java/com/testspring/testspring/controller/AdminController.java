@@ -12,8 +12,10 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -258,27 +260,117 @@ public class AdminController {
 
     // Affiche la page de modification du profile de l'administrateur authentifier
     @GetMapping("/admin/modifier-mon-profile")
-    public String ModifierMonProfile(Model model) {
+    public String modifierMonProfile(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
 
             String nom;
+            String prenom;
             String image;
+            String age;
+            String sexe;
+            String numero;
+            String role;
+            String email;
             if (principal instanceof CustomUserDetails) {
                 CustomUserDetails userDetails = (CustomUserDetails) principal;
                 nom = userDetails.getNom(); // Récupérer le nom
+                prenom = userDetails.getPrenom(); // Récupérer le prénom
                 image = userDetails.getImage(); // Récupérer l'image
+                age = userDetails.getAge(); // Récupérer l'âge
+                sexe = userDetails.getSexe(); // Récupérer le sexe
+                numero = userDetails.getNumero(); // Récupérer le numéro
+                role = userDetails.getRole(); // Récupérer le role
+                email = userDetails.getUsername(); // Récupérer l'email
             } else {
                 nom = "Inconnu";
+                prenom = "Inconnu";
                 image = "Inconnu";
+                age = "Inconnu";
+                sexe = "Inconnu";
+                numero = "Inconnu";
+                role = "Inconnu";
+                email = "Inconnu";
             }
 
             model.addAttribute("nom", nom);
+            model.addAttribute("prenom", prenom);
             model.addAttribute("image", image);
+            model.addAttribute("age", age);
+            model.addAttribute("sexe", sexe);
+            model.addAttribute("numero", numero);
+            model.addAttribute("role", role);
+            model.addAttribute("email", email);
         }
         return "private/admin/pages-profile-settings";
+    }
+
+    // Traite les données de la page de modification du profile de l'administrateur
+    // authentifier
+    @PostMapping("/modifier-mon-profile")
+    public String modifierProfile(Model model, @Valid @ModelAttribute AdminModificationDto adminModificationDto,
+            @RequestParam("image") MultipartFile file) {
+        try {
+            // Récupérer l'utilisateur authentifié
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            AppUser existingUser = service.getAppUserByEmail(userDetails.getUsername());
+
+            if (existingUser == null) {
+                return "redirect:/admin/error";
+            }
+
+            // Répertoire d'upload relatif à la racine du projet
+            String uploadDir = System.getProperty("user.dir") + "/uploads/";
+
+            // Créez le répertoire s'il n'existe pas
+            File uploadDirectory = new File(uploadDir);
+            if (!uploadDirectory.exists()) {
+                uploadDirectory.mkdirs();
+            }
+
+            // Si un nouveau fichier est uploadé
+            if (!file.isEmpty()) {
+                // Supprimer l'ancienne image si elle existe
+                if (existingUser.getImage() != null && !existingUser.getImage().isEmpty()) {
+                    File oldImage = new File(uploadDir + existingUser.getImage());
+                    if (oldImage.exists()) {
+                        oldImage.delete();
+                    }
+                }
+
+                // Enregistrer le nouveau fichier
+                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File newImage = new File(uploadDir + fileName);
+                file.transferTo(newImage);
+
+                // Mettre à jour le chemin de la nouvelle image
+                existingUser.setImage(fileName);
+            }
+
+            // Mettre à jour les autres informations de l'utilisateur
+            existingUser.setNom(adminModificationDto.getNom());
+            existingUser.setPrenom(adminModificationDto.getPrenom());
+            existingUser.setEmail(adminModificationDto.getEmail());
+            existingUser.setAge(adminModificationDto.getAge());
+            existingUser.setSexe(adminModificationDto.getSexe());
+            existingUser.setNumero(adminModificationDto.getNumero());
+            existingUser.setRole(adminModificationDto.getRole());
+
+            // Sauvegarder les modifications dans la base de données
+            service.sauvegarder(existingUser);
+
+            // Recharger les détails de l'utilisateur dans le contexte de sécurité
+            UserDetails updatedUserDetails = service.loadUserByUsername(existingUser.getEmail());
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUserDetails,
+                    updatedUserDetails.getPassword(), updatedUserDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/admin/mon-profile";
     }
 
     // Affiche les détails d'un utilisateur
@@ -399,6 +491,7 @@ public class AdminController {
         return "redirect:/admin/tableau-de-bord";
     }
 
+    // Suppression d'un utilisateur par l'administrateur
     @RequestMapping("/admin/supprimer-utilisateur-{id}")
     public String supprimerUtilisateur(@PathVariable("id") int id) {
         service.deleteById(id);

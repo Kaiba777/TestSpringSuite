@@ -57,4 +57,9 @@ public class AppUserService implements UserDetailsService {
         repo.deleteById(id);
     }
 
+    // Permet de récupérer un utilisateur par son email
+    public AppUser getAppUserByEmail(String email) {
+        return repo.findByEmail(email);
+    }
+
 }
