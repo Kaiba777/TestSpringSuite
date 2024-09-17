@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.testspring.testspring.model.AdminInscriptionDto;
 import com.testspring.testspring.model.AdminModificationDto;
 import com.testspring.testspring.model.AppUser;
+import com.testspring.testspring.model.PasswordChangeDto;
 import com.testspring.testspring.repositorie.AppUserRepository;
 import com.testspring.testspring.service.AppUserService;
 import com.testspring.testspring.service.CustomUserDetails;
@@ -304,7 +305,54 @@ public class AdminController {
             model.addAttribute("role", role);
             model.addAttribute("email", email);
         }
+
+        // Pour changer le mot de passe
+        model.addAttribute("passwordChangeDto", new PasswordChangeDto());
+
         return "private/admin/pages-profile-settings";
+    }
+
+    // Traite les données pour la modification du mot de passe
+    @RequestMapping("/modifier-password")
+    public String modifierPassword(Model model, @Valid @ModelAttribute PasswordChangeDto passwordChangeDto,
+            BindingResult result) {
+
+        // Récupérer l'utilisateur authentifié
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        AppUser existingUser = service.getAppUserByEmail(userDetails.getUsername());
+
+        if (existingUser == null) {
+            result.rejectValue("oldPassword", "error.passwordChangeDto", "Utilisateur non trouvé");
+            return "private/admin/pages-profile-settings";
+        }
+
+        // Vérifier l'ancien mot de passe
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(passwordChangeDto.getOldPassword(), existingUser.getPassword())) {
+            result.rejectValue("oldPassword", "error.passwordChangeDto", "Ancien mot de passe incorrect");
+        }
+
+        // Vérifier si le nouveau mot de passe et la confirmation sont les mêmes
+        if (!passwordChangeDto.getNewPassword().equals(passwordChangeDto.getConfirmPassword())) {
+            result.rejectValue("confirmPassword", "error.passwordChangeDto", "Les mots de passe ne correspondent pas");
+        }
+
+        // Valider les erreurs
+        if (result.hasErrors()) {
+            return "private/admin/pages-profile-settings";
+        }
+
+        // Mettre à jour le mot de passe
+        existingUser.setPassword(encoder.encode(passwordChangeDto.getNewPassword()));
+        service.sauvegarder(existingUser);
+
+        // Recharger les détails de l'utilisateur dans le contexte de sécurité
+        UserDetails updatedUserDetails = service.loadUserByUsername(existingUser.getEmail());
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUserDetails,
+                updatedUserDetails.getPassword(), updatedUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
+        return "redirect:/admin/mon-profile";
     }
 
     // Traite les données de la page de modification du profile de l'administrateur
@@ -497,5 +545,4 @@ public class AdminController {
         service.deleteById(id);
         return "redirect:/admin/tableau-de-bord";
     }
-
 }
