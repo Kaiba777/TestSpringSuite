@@ -208,15 +208,16 @@
                         <div class="row g-4">
                             <div class="col-auto">
                                 <div class="avatar-lg">
-                                    <img src="../private/assets/images/users/avatar-1.jpg" alt="user-img"
+                                    <img th:src="@{/uploads/{image}(image=${image})}" alt="user-img"
                                         class="img-thumbnail rounded-circle" />
                                 </div>
                             </div>
                             <!--end col-->
                             <div class="col">
                                 <div class="p-2">
-                                    <h3 class="text-white mb-1">Anna Adame</h3>
-                                    <p class="text-white-75">Role</p>
+                                    <h3 class="text-white mb-1"><span th:text="${nom}"></span> <span
+                                            th:text="${prenom}"></span></h3>
+                                    <p class="text-white-75" th:text="${role}"></p>
                                 </div>
                             </div>
                             <!--end col-->
@@ -259,35 +260,36 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <th class="ps-0" scope="row">Nom & Prénom :</th>
-                                                                        <td class="text-muted">Anna Adame</td>
+                                                                        <td class="text-muted"><span
+                                                                                th:text="${nom}"></span> <span
+                                                                                th:text="${prenom}"></span></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <th class="ps-0" scope="row">Numéro de Téléphone
                                                                             :</th>
-                                                                        <td class="text-muted">+(1) 987 6543</td>
+                                                                        <td class="text-muted">+226 <span
+                                                                                th:text="${numero}"></span></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <th class="ps-0" scope="row">E-mail :</th>
-                                                                        <td class="text-muted">daveadame@velzon.com</td>
+                                                                        <td class="text-muted" th:text="${email}"></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <th class="ps-0" scope="row">Sexe :</th>
-                                                                        <td class="text-muted">California, United States
-                                                                        </td>
+                                                                        <td class="text-muted" th:text="${sexe}"></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <th class="ps-0" scope="row">Age :</th>
-                                                                        <td class="text-muted">California, United States
-                                                                        </td>
+                                                                        <td class="text-muted" th:text="${age}"></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <th class="ps-0" scope="row">Role :</th>
-                                                                        <td class="text-muted">24 Nov 2021</td>
+                                                                        <td class="text-muted" th:text="${role}"></td>
                                                                     </tr>
                                                                     <tr>
                                                                         <th class="ps-0" scope="row">Date de Création :
                                                                         </th>
-                                                                        <td class="text-muted">California, United States
+                                                                        <td class="text-muted" th:text="${createdAt}">
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
