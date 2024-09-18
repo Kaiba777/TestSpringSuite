@@ -90,8 +90,8 @@ public class AdminController {
         // Permet de récupérer tous les utilisateurs
         List<AppUser> list = service.getAllAppUsers();
 
+        // Récupère les informations de l'utilisateur authentifier
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication != null && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
 
@@ -112,6 +112,7 @@ public class AdminController {
 
         model.addAttribute("totalUtilisateurs", totalUtilisateurs);
         model.addAttribute("totalAdmins", totalAdmins);
+
         return new ModelAndView("private/admin/apps-tasks-list-view", "users", list);
     }
 
