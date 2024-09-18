@@ -219,8 +219,8 @@ public class AdminController {
     @GetMapping("/admin/mon-profile")
     public String monProfile(Model model) {
 
+        // Récupère les informations de l'utilisateur authentifier
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication != null && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
 
@@ -272,8 +272,9 @@ public class AdminController {
     // Affiche la page de modification du profile de l'administrateur authentifier
     @GetMapping("/admin/modifier-mon-profile")
     public String modifierMonProfile(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        // Récupère les informations de l'utilisateur authentifier
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
 
@@ -370,6 +371,7 @@ public class AdminController {
     @PostMapping("/modifier-mon-profile")
     public String modifierProfile(Model model, @Valid @ModelAttribute AdminModificationDto adminModificationDto,
             @RequestParam("image") MultipartFile file) {
+
         try {
             // Récupérer l'utilisateur authentifié
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

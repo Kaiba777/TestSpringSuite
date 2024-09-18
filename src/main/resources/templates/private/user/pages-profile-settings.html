@@ -237,13 +237,13 @@
                                 <div class="card-body p-4">
                                     <div class="tab-content">
                                         <div class="tab-pane active" id="personalDetails" role="tabpanel">
-                                            <form action="javascript:void(0);">
+                                            <form th:action="@{/modifier-mon-profile-utilisateur}" method="post"
+                                                enctype="multipart/form-data">
                                                 <div class="row">
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="firstnameInput" class="form-label">Nom</label>
-                                                            <input type="text" class="form-control" id="firstnameInput"
-                                                                placeholder="Enter your firstname" value="Dave"
+                                                            <input type="text" class="form-control" th:value="${nom}"
                                                                 disabled>
                                                         </div>
                                                     </div>
@@ -251,8 +251,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="lastnameInput" class="form-label">Prénom</label>
-                                                            <input type="text" class="form-control" id="lastnameInput"
-                                                                placeholder="Enter your lastname" value="Adame"
+                                                            <input type="text" class="form-control" th:value="${prenom}"
                                                                 disabled>
                                                         </div>
                                                     </div>
@@ -260,7 +259,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">Numéro de Téléphone</label>
-                                                            <input type="tel" class="form-control" value="+22654789527"
+                                                            <input type="tel" class="form-control" th:value="${numero}"
                                                                 disabled>
                                                         </div>
                                                     </div>
@@ -268,8 +267,8 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">Email</label>
-                                                            <input type="email" class="form-control"
-                                                                value="user@gmail.com" disabled>
+                                                            <input type="email" class="form-control" th:value="${email}"
+                                                                disabled>
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -277,15 +276,14 @@
                                                         <div class="mb-3">
                                                             <label for="JoiningdatInput"
                                                                 class="form-label">Photo</label>
-                                                            <input type="file" class="form-control"
-                                                                id="JoiningdatInput" />
+                                                            <input type="file" class="form-control" name="image" />
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">Sexe</label>
-                                                            <input type="text" class="form-control" value="Masculin"
+                                                            <input type="text" class="form-control" th:value="${sexe}"
                                                                 disabled>
                                                         </div>
                                                     </div>
@@ -293,7 +291,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="mb-3">
                                                             <label for="emailInput" class="form-label">Age</label>
-                                                            <input type="number" class="form-control" value="20"
+                                                            <input type="number" class="form-control" th:value="${age}"
                                                                 disabled>
                                                         </div>
                                                     </div>

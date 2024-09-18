@@ -1,21 +1,39 @@
 package com.testspring.testspring.controller;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.testspring.testspring.model.AppUser;
+import com.testspring.testspring.model.UserModificationDto;
 import com.testspring.testspring.service.AppUserService;
 import com.testspring.testspring.service.CustomUserDetails;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
@@ -146,20 +164,94 @@ public class UserController {
             Object principal = authentication.getPrincipal();
 
             String nom;
+            String prenom;
             String image;
+            String age;
+            String sexe;
+            String numero;
+            String email;
             if (principal instanceof CustomUserDetails) {
                 CustomUserDetails userDetails = (CustomUserDetails) principal;
                 nom = userDetails.getNom(); // Récupérer le nom
+                prenom = userDetails.getPrenom(); // Récupérer le prénom
                 image = userDetails.getImage(); // Récupérer l'image
+                age = userDetails.getAge(); // Récupérer l'âge
+                sexe = userDetails.getSexe(); // Récupérer le sexe
+                numero = userDetails.getNumero(); // Récupérer le numéro
+                email = userDetails.getUsername(); // Récupérer l'email
             } else {
                 nom = "Inconnu";
+                prenom = "Inconnu";
                 image = "Inconnu";
+                age = "Inconnu";
+                sexe = "Inconnu";
+                numero = "Inconnu";
+                email = "Inconnu";
             }
 
             model.addAttribute("nom", nom);
+            model.addAttribute("prenom", prenom);
             model.addAttribute("image", image);
+            model.addAttribute("age", age);
+            model.addAttribute("sexe", sexe);
+            model.addAttribute("numero", numero);
+            model.addAttribute("email", email);
         }
         return "private/user/pages-profile-settings";
+    }
+
+    // Traite les données de la page de modification du profile
+    @PostMapping("/modifier-mon-profile-utilisateur")
+    public String ModifierMonProfile(@RequestParam("image") MultipartFile file) {
+
+        try {
+            // Récupérer l'utilisateur authentifié
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            AppUser existingUser = service.getAppUserByEmail(userDetails.getUsername());
+
+            if (existingUser == null) {
+                return "redirect:/admin/error";
+            }
+
+            // Répertoire d'upload relatif à la racine du projet
+            String uploadDir = System.getProperty("user.dir") + "/uploads/";
+
+            // Créez le répertoire s'il n'existe pas
+            File uploadDirectory = new File(uploadDir);
+            if (!uploadDirectory.exists()) {
+                uploadDirectory.mkdirs();
+            }
+
+            // Si un nouveau fichier est uploadé
+            if (!file.isEmpty()) {
+                // Supprimer l'ancienne image si elle existe
+                if (existingUser.getImage() != null && !existingUser.getImage().isEmpty()) {
+                    File oldImage = new File(uploadDir + existingUser.getImage());
+                    if (oldImage.exists()) {
+                        oldImage.delete();
+                    }
+                }
+
+                // Enregistrer le nouveau fichier
+                String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                File newImage = new File(uploadDir + fileName);
+                file.transferTo(newImage);
+
+                // Mettre à jour le chemin de la nouvelle image
+                existingUser.setImage(fileName);
+            }
+
+            // Recharger les détails de l'utilisateur dans le contexte de sécurité
+            UserDetails updatedUserDetails = service.loadUserByUsername(existingUser.getEmail());
+            Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUserDetails,
+                    updatedUserDetails.getPassword(), updatedUserDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/user/mon-profile";
     }
 
 }
