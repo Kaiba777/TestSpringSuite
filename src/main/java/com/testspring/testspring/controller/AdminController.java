@@ -434,6 +434,8 @@ public class AdminController {
     // Affiche les détails d'un utilisateur
     @RequestMapping("/admin/details-utilisateur-{id}")
     public String detailsUtilisateur(@PathVariable("id") int id, Model model) {
+
+        // Affiche les détails d'un utilisateur à partir de l'id
         AppUser appUser = service.getAppUserById(id);
         model.addAttribute("user", appUser);
 

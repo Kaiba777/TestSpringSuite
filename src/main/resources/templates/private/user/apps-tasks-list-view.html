@@ -259,7 +259,7 @@
                                                         <div class="avatar-group">
                                                             <a href="javascript: void(0);" class="avatar-group-item"
                                                                 data-bs-toggle="tooltip" data-bs-trigger="hover"
-                                                                data-bs-placement="top" title="Frank">
+                                                                data-bs-placement="top" th:title="${user.nom}">
                                                                 <img th:src="@{/uploads/{filename}(filename=${user.image})}"
                                                                     alt="" class="rounded-circle avatar-xxs" />
                                                             </a>
@@ -274,7 +274,7 @@
                                                             <div class="flex-shrink-0 ms-4">
                                                                 <ul class="list-inline tasks-list-menu mb-0">
                                                                     <li class="list-inline-item"><a
-                                                                            href="/user/detail-utilisateur"><i
+                                                                            th:href="@{/user/detail-utilisateur-{id}(id=${user.id})}"><i
                                                                                 class="ri-eye-fill align-bottom me-2 text-muted"></i></a>
                                                                     </li>
                                                                 </ul>
