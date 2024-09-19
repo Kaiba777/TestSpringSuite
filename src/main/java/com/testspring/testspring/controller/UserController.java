@@ -1,35 +1,29 @@
 package com.testspring.testspring.controller;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.testspring.testspring.model.AppUser;
-import com.testspring.testspring.model.UserModificationDto;
+import com.testspring.testspring.model.PasswordChangeDto;
 import com.testspring.testspring.service.AppUserService;
 import com.testspring.testspring.service.CustomUserDetails;
 
@@ -197,6 +191,10 @@ public class UserController {
             model.addAttribute("numero", numero);
             model.addAttribute("email", email);
         }
+
+        // Pour changer le mot de passe
+        model.addAttribute("passwordChangeDto", new PasswordChangeDto());
+
         return "private/user/pages-profile-settings";
     }
 
@@ -242,6 +240,9 @@ public class UserController {
                 existingUser.setImage(fileName);
             }
 
+            // Sauvegarder les modifications dans la base de données
+            service.sauvegarder(existingUser);
+
             // Recharger les détails de l'utilisateur dans le contexte de sécurité
             UserDetails updatedUserDetails = service.loadUserByUsername(existingUser.getEmail());
             Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUserDetails,
@@ -251,6 +252,49 @@ public class UserController {
             e.printStackTrace();
         }
 
+        return "redirect:/user/mon-profile";
+    }
+
+    // Traite les données pour la modification du mot de passe
+    @RequestMapping("/modifier-password-utilisateur")
+    public String ModifierMonProfile(Model model, @Valid @ModelAttribute PasswordChangeDto passwordChangeDto,
+            BindingResult result) {
+
+        // Récupérer l'utilisateur authentifié
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        AppUser existingUser = service.getAppUserByEmail(userDetails.getUsername());
+
+        if (existingUser == null) {
+            result.rejectValue("oldPassword", "error.passwordChangeDto", "Utilisateur non trouvé");
+            return "private/user/pages-profile-settings";
+        }
+
+        // Vérifier l'ancien mot de passe
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (!encoder.matches(passwordChangeDto.getOldPassword(), existingUser.getPassword())) {
+            result.rejectValue("oldPassword", "error.passwordChangeDto", "Ancien mot de passe incorrect");
+        }
+
+        // Vérifier si le nouveau mot de passe et la confirmation sont les mêmes
+        if (!passwordChangeDto.getNewPassword().equals(passwordChangeDto.getConfirmPassword())) {
+            result.rejectValue("confirmPassword", "error.passwordChangeDto", "Les mots de passe ne correspondent pas");
+        }
+
+        // Valider les erreurs
+        if (result.hasErrors()) {
+            return "private/user/pages-profile-settings";
+        }
+
+        // Mettre à jour le mot de passe
+        existingUser.setPassword(encoder.encode(passwordChangeDto.getNewPassword()));
+        service.sauvegarder(existingUser);
+
+        // Recharger les détails de l'utilisateur dans le contexte de sécurité
+        UserDetails updatedUserDetails = service.loadUserByUsername(existingUser.getEmail());
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUserDetails,
+                updatedUserDetails.getPassword(), updatedUserDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
         return "redirect:/user/mon-profile";
     }
 
