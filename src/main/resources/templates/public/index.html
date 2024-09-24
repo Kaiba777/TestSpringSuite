@@ -97,14 +97,31 @@
               <li class="nav-item">
                 <a class="nav-link" href="team.html">équipe</a>
               </li>
-              <!-- Apparaît lorsque l'utilisateur est connecté -->
-              <li class="nav-item dropdown1" sec:authorize="isAuthenticated()">
+              <!-- Apparaît lorsque l'administrateur est connecté -->
+              <li class="nav-item dropdown1" sec:authorize="isAuthenticated()" th:if="${role == 'administrateur'}">
                 <img class="rounded-circle largeur" th:src="@{/uploads/{image}(image=${image})}" alt="Header Avatar"
                   height="30">
                 <span class="text-white" th:text="${nom}"></span>
                 <div class="dropdown-content">
                   <a href="/admin/tableau-de-bord" class="nav-link text-white lien1">tableau de bord</a>
                   <a href="/admin/mon-profile" class="nav-link text-white lien1">Mon profile</a>
+                  <form method="post" action="/logout">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit" class="btn btn-danger">
+                      <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+                      <span>Deconnexion</span>
+                    </button>
+                  </form>
+                </div>
+              </li>
+              <!-- Apparaît lorsque l'utilisateur est connecté -->
+              <li class="nav-item dropdown1" sec:authorize="isAuthenticated()" th:if="${role == 'utilisateur'}">
+                <img class="rounded-circle largeur" th:src="@{/uploads/{image}(image=${image})}" alt="Header Avatar"
+                  height="30">
+                <span class="text-white" th:text="${nom}"></span>
+                <div class="dropdown-content">
+                  <a href="/user/tableau-de-bord" class="nav-link text-white lien1">tableau de bord</a>
+                  <a href="/user/mon-profile" class="nav-link text-white lien1">Mon profile</a>
                   <form method="post" action="/logout">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                     <button type="submit" class="btn btn-danger">

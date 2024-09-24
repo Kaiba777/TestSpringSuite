@@ -21,17 +21,21 @@ public class PublicController {
 
             String nom;
             String image;
+            String role;
             if (principal instanceof CustomUserDetails) {
                 CustomUserDetails userDetails = (CustomUserDetails) principal;
                 nom = userDetails.getNom(); // Récupérer le nom
                 image = userDetails.getImage(); // Récupérer l'image
+                role = userDetails.getRole(); // Récupérer le role
             } else {
                 nom = "Inconnu";
                 image = "Inconnu";
+                role = "Inconnu";
             }
 
             model.addAttribute("nom", nom);
             model.addAttribute("image", image);
+            model.addAttribute("role", role);
         }
 
         return "public/index";

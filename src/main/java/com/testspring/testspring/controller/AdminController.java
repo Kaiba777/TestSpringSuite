@@ -41,6 +41,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.IOException;
 
 @Controller
@@ -147,7 +149,7 @@ public class AdminController {
     // Traite les données de la page ajout utilisateur
     @PostMapping("/admin/ajout-utilisateur")
     public String ajoutUtilisateur(Model model, @Valid @ModelAttribute AdminInscriptionDto adminInscriptionDto,
-            BindingResult result, @RequestParam("image") MultipartFile file) {
+            BindingResult result, @RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
 
         // Vérifie si le password et le confirmerPassword sont les mêmes
         if (!adminInscriptionDto.getPassword().equals(adminInscriptionDto.getConfirmerPassword())) {
@@ -203,6 +205,9 @@ public class AdminController {
 
             // message de succès
             model.addAttribute("success", true);
+
+            // Message de succès
+            redirectAttributes.addFlashAttribute("message_ajout", "Utilisateur ajouter avec succès !");
 
             // Redirection vers la page de connexion après l'inscription
             return "redirect:/admin/tableau-de-bord";
@@ -326,7 +331,7 @@ public class AdminController {
     // Traite les données pour la modification du mot de passe
     @RequestMapping("/modifier-password")
     public String modifierPassword(Model model, @Valid @ModelAttribute PasswordChangeDto passwordChangeDto,
-            BindingResult result) {
+            BindingResult result, RedirectAttributes redirectAttributes) {
 
         // Récupérer l'utilisateur authentifié
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -363,6 +368,10 @@ public class AdminController {
         Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUserDetails,
                 updatedUserDetails.getPassword(), updatedUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        // Message de succès
+        redirectAttributes.addFlashAttribute("message_password", "Mot de passe modifier avec succès !");
+
         return "redirect:/admin/mon-profile";
     }
 
@@ -370,7 +379,7 @@ public class AdminController {
     // authentifier
     @PostMapping("/modifier-mon-profile")
     public String modifierProfile(Model model, @Valid @ModelAttribute AdminModificationDto adminModificationDto,
-            @RequestParam("image") MultipartFile file) {
+            @RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
 
         try {
             // Récupérer l'utilisateur authentifié
@@ -430,6 +439,10 @@ public class AdminController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Message de succès
+        redirectAttributes.addFlashAttribute("message_profile", "Profile modifier avec succès !");
+
         return "redirect:/admin/mon-profile";
     }
 
@@ -495,10 +508,10 @@ public class AdminController {
         return "private/admin/apps-tasks-edit";
     }
 
-    // Permet de traiter les données de la page de modification
+    // Permet de traiter les données de la page de modification d'un utilisateur
     @PostMapping("/modifie")
     public String modifierUtilisateur(Model model, @Valid @ModelAttribute AdminModificationDto adminModificationDto,
-            @RequestParam("image") MultipartFile file) {
+            @RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
 
         try {
             // Récupérer l'utilisateur existant à partir de la base de données
@@ -550,13 +563,32 @@ public class AdminController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Message de succès
+        redirectAttributes.addFlashAttribute("message_utilisateur", "Utilisateur modifier avec succès !");
+
         return "redirect:/admin/tableau-de-bord";
     }
 
     // Suppression d'un utilisateur par l'administrateur
     @RequestMapping("/admin/supprimer-utilisateur-{id}")
-    public String supprimerUtilisateur(@PathVariable("id") int id) {
+    public String supprimerUtilisateur(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+
+        // Récupère l'utilisateur et supprime son image
+        AppUser existingUser = service.getAppUserById(id);
+        if (existingUser.getImage() != null && !existingUser.getImage().isEmpty()) {
+            File oldImage = new File(uploadDir + existingUser.getImage());
+            if (oldImage.exists()) {
+                oldImage.delete();
+            }
+        }
+
+        // Supprimer un utilisateur
         service.deleteById(id);
+
+        // Message de succès
+        redirectAttributes.addFlashAttribute("message_suppression", "Utilisateur supprimer avec succès !");
+
         return "redirect:/admin/tableau-de-bord";
     }
 }

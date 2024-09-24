@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.testspring.testspring.model.AppUser;
 import com.testspring.testspring.model.PasswordChangeDto;
@@ -200,7 +201,7 @@ public class UserController {
 
     // Traite les données de la page de modification du profile
     @PostMapping("/modifier-mon-profile-utilisateur")
-    public String ModifierMonProfile(@RequestParam("image") MultipartFile file) {
+    public String ModifierMonProfile(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
 
         try {
             // Récupérer l'utilisateur authentifié
@@ -252,13 +253,16 @@ public class UserController {
             e.printStackTrace();
         }
 
+        // Message de succès
+        redirectAttributes.addFlashAttribute("message_profile", "Profile modifier avec succès !");
+
         return "redirect:/user/mon-profile";
     }
 
     // Traite les données pour la modification du mot de passe
     @RequestMapping("/modifier-password-utilisateur")
     public String ModifierMonProfile(Model model, @Valid @ModelAttribute PasswordChangeDto passwordChangeDto,
-            BindingResult result) {
+            BindingResult result, RedirectAttributes redirectAttributes) {
 
         // Récupérer l'utilisateur authentifié
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -295,6 +299,10 @@ public class UserController {
         Authentication newAuth = new UsernamePasswordAuthenticationToken(updatedUserDetails,
                 updatedUserDetails.getPassword(), updatedUserDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+        // Message de succès
+        redirectAttributes.addFlashAttribute("message_password", "Mot de passe modifier avec succès !");
+
         return "redirect:/user/mon-profile";
     }
 

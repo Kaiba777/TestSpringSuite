@@ -170,6 +170,11 @@
                     <ul class="navbar-nav" id="navbar-nav">
                         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                         <li class="nav-item">
+                            <a href="/" class="nav-link">
+                                Acceuil
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="tableau-de-bord" class="nav-link active">
                                 Tableaux de bord </a>
                         </li>
@@ -211,6 +216,18 @@
                         </div>
                     </div>
                     <!-- end page title -->
+
+                    <!-- Message de succès pour l'ajout d'un utilisateur -->
+                    <div class="alert alert-success" th:if="${message_ajout}" th:text="${message_ajout}">
+                    </div>
+
+                    <!-- Message de succès pour la modification d'un utilisateur -->
+                    <div class="alert alert-success" th:if="${message_utilisateur}" th:text="${message_utilisateur}">
+                    </div>
+
+                    <!-- Message de succès pour la suppression d'un utilisateur -->
+                    <div class="alert alert-danger" th:if="${message_suppression}" th:text="${message_suppression}">
+                    </div>
 
                     <div class="row">
                         <div class="col-xxl-3 col-sm-6">

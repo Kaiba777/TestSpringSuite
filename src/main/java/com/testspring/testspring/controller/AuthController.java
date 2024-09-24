@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthController {
@@ -37,14 +38,13 @@ public class AuthController {
         InscriptionDto inscriptionDto = new InscriptionDto();
         model.addAttribute(inscriptionDto);
 
-        // Message de Succès
-        model.addAttribute("success", false);
         return "auth/auth-signup-basic";
     }
 
     // Permet de valider le formulaire
     @PostMapping("/Inscription")
-    public String inscription(Model model, @Valid @ModelAttribute InscriptionDto inscriptionDto, BindingResult result) {
+    public String inscription(Model model, @Valid @ModelAttribute InscriptionDto inscriptionDto, BindingResult result,
+            RedirectAttributes redirectAttributes) {
 
         MultipartFile file = inscriptionDto.getImage();
 
@@ -100,8 +100,8 @@ public class AuthController {
             // Vider le formulaire d'inscription après avoir créer un utilisateur
             model.addAttribute("inscriptionDto", new InscriptionDto());
 
-            // message de succès
-            model.addAttribute("success", true);
+            // Message de succès
+            redirectAttributes.addFlashAttribute("message", "Inscription reussi !");
 
             // Redirection vers la page de connexion après l'inscription
             return "redirect:/login";
@@ -118,6 +118,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String connexion() {
+
         return "auth/auth-signin-basic";
     }
 
